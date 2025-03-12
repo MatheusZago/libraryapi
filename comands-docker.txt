@@ -1,0 +1,33 @@
+//BAIXAR POSTGRES
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres
+    -e POSTGRES_USER=postgres -e POSTGRES_DB=library postgres:16.3
+
+//BAIXAR PGADMIN
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com
+    -e PGADMIN_DEFAULT_PASSWORD=admin dpage/pgadmin4:8.9
+
+//EXTRA
+Ao adicionar -d no docker run vc pode fechar os cmd e power sheel sem que fechem (isso tira o modo interativo)
+
+
+//CRIAR NETWORK
+docker network create [name]
+
+Para criar um container apontando para uma network basta adicionar --network [nome da network] antes da imagem
+Exemplo:
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres
+    -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network postgres:16.3
+
+
+//COMANDOS GERAIS
+docker stop [nome do container] //Para o container, mas não excluid
+
+docker start [nome do container]
+
+docker ps //Mostra os containers rodando
+docker ps -a //Mostra todos os containers, até os parados
+
+docker rm [nome do container] //para remover ele de vez
+
+netstart aof //mostra todos os serviços das portas
+netstart aof | findstr 5432 //Pesquisa uma porta especifica (5432 nesse caso)
