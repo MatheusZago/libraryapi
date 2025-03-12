@@ -1,0 +1,58 @@
+package com.matheusluizago.libraryapi.model;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+@Entity
+@Table(name = "author", schema = "public")
+public class Author {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
+    @Column(name = "birthdate", nullable = false)
+    private LocalDate birthdate;
+    @Column(name = "nationality", length = 50, nullable = false)
+    private String nationality;
+
+
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+}
