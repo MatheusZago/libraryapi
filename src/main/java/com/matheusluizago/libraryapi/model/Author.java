@@ -21,8 +21,9 @@ public class Author {
     @Column(name = "nationality", length = 50, nullable = false)
     private String nationality;
 
-
-
+    @Deprecated //Tem que criar o construtor vazio para spring, mas pode deixar Deprecated pra ngm usar
+    public Author() {
+    }
 
     public UUID getId() {
         return id;
