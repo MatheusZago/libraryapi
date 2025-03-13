@@ -31,9 +31,29 @@ class BookRepositoryTest {
         book.setTitle("UFO");
         book.setPublicationDate(LocalDate.of(1980, 01, 2));
 
-        //Tem que passar objeto do tipo author já cadastrado
         Author author = authorRepository.findById(UUID.fromString(
                 "f3043ee6-dd40-48e0-adee-f18ab756deec")).orElse(null);
+
+        book.setAuthor(author);
+
+        bookRepository.save(book);
+    }
+
+
+    @Test
+    void saveWithCascadeTest(){
+        Book book = new Book();
+        book.setIsbn("90778-84874");
+        book.setPrice(BigDecimal.valueOf(100));
+        book.setGenre(GenreBook.FICTION);
+        book.setTitle("UFO");
+        book.setPublicationDate(LocalDate.of(1980, 01, 2));
+
+        Author author = new Author();
+        author.setName("João");
+        author.setNationality("Brasileira");
+        author.setBirthdate(LocalDate.of(1950, 01, 31));
+
         book.setAuthor(author);
 
         bookRepository.save(book);

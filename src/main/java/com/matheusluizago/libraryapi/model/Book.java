@@ -32,7 +32,8 @@ public class Book {
     @Column(name = "price", precision = 18, scale = 2)
     private BigDecimal price;
 
-    @ManyToOne //Fazendo uma foreign key
+    //Fazendo uma foreign key
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 
