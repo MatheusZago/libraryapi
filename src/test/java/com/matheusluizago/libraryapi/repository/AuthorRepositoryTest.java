@@ -1,7 +1,6 @@
-package com.matheusluizago.libraryapi.repositories;
+package com.matheusluizago.libraryapi.repository;
 
 import com.matheusluizago.libraryapi.model.Author;
-import com.matheusluizago.libraryapi.repository.AuthorRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
