@@ -33,7 +33,8 @@ public class Book {
     private BigDecimal price;
 
     //Fazendo uma foreign key
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY) //Não traz os dados do author, só do livro, se botar eager ele traz
+    //(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 

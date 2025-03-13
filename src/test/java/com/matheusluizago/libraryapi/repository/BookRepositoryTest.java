@@ -6,6 +6,7 @@ import com.matheusluizago.libraryapi.model.GenreBook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -76,6 +77,16 @@ class BookRepositoryTest {
     void delete(){
         var id = UUID.fromString("ef032e09-c7dd-4bcd-9175-d04dc3afdaa3");
         bookRepository.deleteById(id);
+    }
+
+    @Test
+    @Transactional
+    void findBookTest(){
+        UUID id = UUID.fromString("bbcc855e-52c7-47de-99b8-a4bfb03c287f");
+        Book book = bookRepository.findById(id).orElse(null);
+
+        System.out.println(book.getTitle());
+        System.out.println(book.getAuthor().getName());
     }
 
 }

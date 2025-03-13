@@ -18,3 +18,8 @@ CREATE TABLE book(
 
 SELECT * FROM author;
 SELECT * FROM book;
+
+
+SELECT b.id, b.title as name_book, a.name as name_author
+from book as b
+join author as a on a.id = b.author_id;
