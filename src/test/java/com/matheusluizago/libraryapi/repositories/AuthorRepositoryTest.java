@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,6 +44,23 @@ public class AuthorRepositoryTest {
 
 			authorRepository.save(author);
 		}
-
 	}
+
+	@Test
+	public void listTest(){
+		List<Author> list = authorRepository.findAll();
+		list.forEach(System.out::println);
+	}
+
+	@Test
+	public void count(){
+		System.out.println("Author's count: " + authorRepository.count());
+	}
+
+	@Test
+	public void deleteByIdTest(){
+		var id = UUID.fromString("570b091d-c810-4edd-9279-5f7dea1ceeb0");
+		authorRepository.deleteById(id);
+	}
+
 }
