@@ -24,7 +24,8 @@ public class Author {
 
     //Colocando uma lista de todos os lviros do author.
     //Isso é pra mostrar q nn é uma coluna no BD, e que ele é mapeado pela variavel chamada de author na classe livros
-    @OneToMany(mappedBy = "author")
+//    @OneToMany(mappedBy = "author")
+    @Transient
     private List<Book> books;
 
     @Deprecated //Tem que criar o construtor vazio para spring, mas pode deixar Deprecated pra ngm usar
@@ -61,5 +62,16 @@ public class Author {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthdate=" + birthdate +
+                ", nationality='" + nationality + '\'' +
+                ", books=" + books +
+                '}';
     }
 }
