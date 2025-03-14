@@ -24,8 +24,7 @@ public class Author {
 
     //Colocando uma lista de todos os lviros do author.
     //Isso é pra mostrar q nn é uma coluna no BD, e que ele é mapeado pela variavel chamada de author na classe livros
-    @OneToMany(mappedBy = "author")
-    //Da pra botar um cascade all pra deixar os livros fixados no author
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Book> books;
 
     @Deprecated //Tem que criar o construtor vazio para spring, mas pode deixar Deprecated pra ngm usar

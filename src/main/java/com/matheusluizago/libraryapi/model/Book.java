@@ -117,7 +117,6 @@ public class Book {
                 ", publicationDate=" + publicationDate +
                 ", genre=" + genre +
                 ", price=" + price +
-                ", author=" + author +
                 '}';
     }
 

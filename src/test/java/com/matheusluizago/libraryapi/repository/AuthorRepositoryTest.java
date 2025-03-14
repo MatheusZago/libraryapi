@@ -6,6 +6,7 @@ import com.matheusluizago.libraryapi.model.GenreBook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -100,7 +101,21 @@ public class AuthorRepositoryTest {
 		author.getBooks().add(book2);
 
 		authorRepository.save(author);
-		bookRepository.saveAll(author.getBooks());
+//		bookRepository.saveAll(author.getBooks());
+	}
+
+	@Test
+//	@Transactional
+	void listAuthorBooks(){
+		var id = UUID.fromString("82525c90-f2af-487f-a16d-c54662fff99c");
+		var author = authorRepository.findById(id).get();
+
+		//Sem usar transactional, quer buscar os livros do authro
+
+		List<Book> bookList = bookRepository.findByAuthor(author);
+		author.setBooks(bookList);
+
+		author.getBooks().forEach(System.out::println);
 	}
 
 }
