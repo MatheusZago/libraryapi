@@ -119,4 +119,19 @@ class BookRepositoryTest {
         list.forEach(System.out::println);
     }
 
+    @Test
+    void findBookByPublishedDateBetweenTest(){
+
+        List<Book> list = bookRepository.findByPublicationDateBetween(
+                LocalDate.of(1999, 1, 1), LocalDate.of(2000, 1, 1));
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void findByTitleContainingTest(){
+        List<Book> list = bookRepository.findByTitleContaining("casa assombrada");
+
+        list.forEach(System.out::println);
+    }
+
 }
