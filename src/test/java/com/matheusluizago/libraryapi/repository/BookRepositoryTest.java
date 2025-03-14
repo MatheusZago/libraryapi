@@ -29,8 +29,8 @@ class BookRepositoryTest {
         Book book = new Book();
         book.setIsbn("90778-84874");
         book.setPrice(BigDecimal.valueOf(100));
-        book.setGenre(GenreBook.FICTION);
-        book.setTitle("UFO");
+        book.setGenre(GenreBook.SCIENCE);
+        book.setTitle("SCIENCE BOOK");
         book.setPublicationDate(LocalDate.of(1980, 1, 2));
 
         Author author = authorRepository.findById(UUID.fromString(
@@ -169,6 +169,16 @@ class BookRepositoryTest {
     void listByGenreQueryParamPositionalTest(){
         var result = bookRepository.findByGenrePositional(GenreBook.FICTION, "price");
         result.forEach(System.out::println);
+    }
+
+    @Test
+    void deleteByGenreTest(){
+        bookRepository.deleteByGenre(GenreBook.SCIENCE);
+    }
+
+    @Test
+    void updatePublicationDateTest(){
+        bookRepository.updateDataPublication(LocalDate.of(2000, 01, 01));
     }
 
 }
