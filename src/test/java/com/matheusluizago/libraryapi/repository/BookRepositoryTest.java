@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,6 +88,35 @@ class BookRepositoryTest {
 
         System.out.println(book.getTitle());
         System.out.println(book.getAuthor().getName());
+    }
+
+    @Test
+    void findBookByTitleTest(){
+        List<Book> list = bookRepository.findByTitle("O roubo da casa assombrada");
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void findBookByIsbnTest(){
+        List<Book> list = bookRepository.findByIsbn("99999-84874");
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void findBookByTitleAndPriceTest(){
+        var price = BigDecimal.valueOf(204.00);
+
+        List<Book> list = bookRepository.findByTitleAndPrice(
+                "O roubo da casa assombrada", price);
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void findBookByTitleOrIsbnTest(){
+
+        List<Book> list = bookRepository.findByTitleOrIsbn(
+                "O roubo casa assombrada", "99999-84874" );
+        list.forEach(System.out::println);
     }
 
 }
