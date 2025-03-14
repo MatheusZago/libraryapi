@@ -148,14 +148,26 @@ class BookRepositoryTest {
     }
 
     @Test
-    void listTitleBooks(){
+    void listTitleBooksTest(){
         var result = bookRepository.listTitleBooks();
         result.forEach(System.out::println);
     }
 
     @Test
-    void listGenreBrasilianAuthor(){
+    void listGenreBrasilianAuthorTest(){
         var result = bookRepository.listGenreBrasilianAuthors();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void listByGenreQueryParamTest(){
+        var result = bookRepository.findByGenre(GenreBook.FICTION, "price");
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void listByGenreQueryParamPositionalTest(){
+        var result = bookRepository.findByGenrePositional(GenreBook.FICTION, "price");
         result.forEach(System.out::println);
     }
 

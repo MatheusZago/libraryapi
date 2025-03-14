@@ -2,8 +2,10 @@ package com.matheusluizago.libraryapi.repository;
 
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.model.Book;
+import com.matheusluizago.libraryapi.model.GenreBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -58,4 +60,12 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
             ORDER BY b.genre
             """)
     List<String> listGenreBrasilianAuthors();
+
+    //Named Parameters
+    @Query("SELECT b FROM Book b WHERE b.genre = :genre ORDER BY :param")
+    List<Book> findByGenre(@Param("genre") GenreBook genreBook, @Param("param") String param);
+
+    //Positional parameters
+    @Query("SELECT b FROM Book b WHERE b.genre = ?1 ORDER BY ?2")
+    List<Book> findByGenrePositional(GenreBook genreBook, String param);
 }
