@@ -6,11 +6,13 @@ import com.matheusluizago.libraryapi.model.GenreBook;
 import com.matheusluizago.libraryapi.repository.AuthorRepository;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 public class TransactionService {
@@ -19,6 +21,33 @@ public class TransactionService {
     private AuthorRepository authorRepository;
     @Autowired
     private BookRepository bookRepository;
+
+    @Transactional
+    public void updatingWithoutUpdate(){
+        var book  = bookRepository.
+                findById(UUID.fromString("bbcc855e-52c7-47de-99b8-a4bfb03c287f"))
+                .orElse(null);
+
+        book.setPublicationDate(LocalDate.of(2004, 6, 13));
+
+//        bookRepository.save(book); //Não precisa disso pq tem o transational
+    }
+
+    //Pseudocódigo só pra exemplo
+    @Transactional
+    public void saveBookWithPicture(){
+        //salva o livro
+        //repository.save(book)
+
+        //pega o id do livro
+        //var id = book.getId(); //Msm se ainda nn tiver tido o commit o jpa já criou o id
+
+        //salva foto do livro numa bucket
+        //bucketService.salvar(book.getFoto(), id + ".png");
+
+        //Atualizar o nome do arquivo que foi salvo
+        //book.setNameArquivePicture(id + ".png");
+    }
 
     @Transactional
     public void execute(){
