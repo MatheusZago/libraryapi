@@ -134,4 +134,29 @@ class BookRepositoryTest {
         list.forEach(System.out::println);
     }
 
+    @Test
+    void listAllWithQuery(){
+        var result = bookRepository.listAllOrderByTitleAndPrice();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    @Transactional
+    void listBookAuthors(){
+        var result = bookRepository.listBookAuthors();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void listTitleBooks(){
+        var result = bookRepository.listTitleBooks();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void listGenreBrasilianAuthor(){
+        var result = bookRepository.listGenreBrasilianAuthors();
+        result.forEach(System.out::println);
+    }
+
 }

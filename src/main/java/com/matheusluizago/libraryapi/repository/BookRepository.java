@@ -3,6 +3,7 @@ package com.matheusluizago.libraryapi.repository;
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,4 +34,28 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     //Da pra adicionar IgnoreCase no fim tbm
     //Pode adicionar true or false se for algo booleano
     //In, Not in pra inverter
+
+    // JPQL -> referencia as entidades e as propriedades
+    // select l.* from livro as l order by l.titulo
+    @Query(" select b from Book as b order by b.title, b.price ")
+    List<Book> listAllOrderByTitleAndPrice();
+
+     /* select a.*
+            * from livro l
+     * join autor a on a.id = l.id_autor
+     */
+    @Query("SELECT a FROM Book b JOIN b.author a ")
+    List<Author> listBookAuthors();
+
+    @Query("SELECT DISTINCT b.title FROM Book b")
+    List<String> listTitleBooks();
+
+    @Query("""
+            SELECT b.genre
+            FROM Book b
+            JOIN b.author a
+            WHERE a.nationality = 'Mineiro'
+            ORDER BY b.genre
+            """)
+    List<String> listGenreBrasilianAuthors();
 }
