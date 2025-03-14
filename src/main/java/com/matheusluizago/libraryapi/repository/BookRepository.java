@@ -77,7 +77,7 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     void deleteByGenre(GenreBook genre);
 
     @Modifying
-    @Transactional
+    @Transactional //Só pra teste, SEMPRE coloque WHERE
     @Query("UPDATE Book SET publicationDate = ?1")
     void updateDataPublication(LocalDate newDate);
 }
