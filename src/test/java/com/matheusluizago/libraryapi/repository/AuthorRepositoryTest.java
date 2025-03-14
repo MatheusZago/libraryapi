@@ -1,11 +1,15 @@
 package com.matheusluizago.libraryapi.repository;
 
 import com.matheusluizago.libraryapi.model.Author;
+import com.matheusluizago.libraryapi.model.Book;
+import com.matheusluizago.libraryapi.model.GenreBook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,8 +20,11 @@ public class AuthorRepositoryTest {
     @Autowired
     AuthorRepository authorRepository;
 
+	@Autowired
+	BookRepository bookRepository;
+
     @Test
-    public void saveTest(){
+	void saveTest(){
 		Author author = new Author();
 		author.setName("Maria");
 		author.setNationality("Brasileira");
@@ -28,7 +35,7 @@ public class AuthorRepositoryTest {
     }
 
 	@Test
-	public void updateTest(){
+	void updateTest(){
 		var id = UUID.fromString("570b091d-c810-4edd-9279-5f7dea1ceeb0");
 
 		Optional<Author> possibleAuthor = authorRepository.findById(id);
@@ -46,20 +53,54 @@ public class AuthorRepositoryTest {
 	}
 
 	@Test
-	public void listTest(){
+	void listTest(){
 		List<Author> list = authorRepository.findAll();
 		list.forEach(System.out::println);
 	}
 
 	@Test
-	public void count(){
+	void count(){
 		System.out.println("Author's count: " + authorRepository.count());
 	}
 
 	@Test
-	public void deleteByIdTest(){
+	void deleteByIdTest(){
 		var id = UUID.fromString("570b091d-c810-4edd-9279-5f7dea1ceeb0");
 		authorRepository.deleteById(id);
+	}
+
+	@Test
+	void saveAuthorWithBooksTest(){
+		Author author = new Author();
+		author.setName("Antonio");
+		author.setNationality("Americano");
+		author.setBirthdate(LocalDate.of(1970, 5, 12));
+
+		Book book = new Book();
+		book.setIsbn("99999-84874");
+		book.setPrice(BigDecimal.valueOf(204));
+		book.setGenre(GenreBook.MYSTERY);
+		book.setTitle("O roubo da casa assombrada");
+		book.setPublicationDate(LocalDate.of(1999, 3, 13));
+		book.setAuthor(author);
+
+		//Botando livros na lsita do author
+
+		Book book2 = new Book();
+		book2.setIsbn("99999-84874");
+		book2.setPrice(BigDecimal.valueOf(204));
+		book2.setGenre(GenreBook.MYSTERY);
+		book2.setTitle("O roubo da casa assombrada");
+		book2.setPublicationDate(LocalDate.of(1999, 3, 13));
+		book2.setAuthor(author);
+
+		//Botando livros na lsita do author
+		author.setBooks(new ArrayList<>());
+		author.getBooks().add(book);
+		author.getBooks().add(book2);
+
+		authorRepository.save(author);
+		bookRepository.saveAll(author.getBooks());
 	}
 
 }

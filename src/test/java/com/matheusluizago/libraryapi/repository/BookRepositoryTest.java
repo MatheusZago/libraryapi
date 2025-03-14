@@ -30,7 +30,7 @@ class BookRepositoryTest {
         book.setPrice(BigDecimal.valueOf(100));
         book.setGenre(GenreBook.FICTION);
         book.setTitle("UFO");
-        book.setPublicationDate(LocalDate.of(1980, 01, 2));
+        book.setPublicationDate(LocalDate.of(1980, 1, 2));
 
         Author author = authorRepository.findById(UUID.fromString(
                 "f3043ee6-dd40-48e0-adee-f18ab756deec")).orElse(null);
