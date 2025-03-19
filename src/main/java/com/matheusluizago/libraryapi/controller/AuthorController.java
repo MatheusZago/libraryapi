@@ -1,6 +1,7 @@
 package com.matheusluizago.libraryapi.controller;
 
 import com.matheusluizago.libraryapi.controller.dto.AuthorDTO;
+import com.matheusluizago.libraryapi.controller.dto.ErrorResponse;
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.service.AuthorService;
 import org.apache.coyote.Response;
