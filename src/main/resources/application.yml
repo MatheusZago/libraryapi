@@ -9,6 +9,6 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update #Definindo estragédia para ele criar o banco e atualizar ele, mas ele se mantem qnd fecha
+      ddl-auto: none #Definindo estragédia para ele criar o banco e atualizar ele, mas ele se mantem qnd fecha
     properties:
       hibernate.format_sql: true
