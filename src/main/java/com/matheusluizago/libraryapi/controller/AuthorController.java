@@ -2,6 +2,8 @@ package com.matheusluizago.libraryapi.controller;
 
 import com.matheusluizago.libraryapi.controller.dto.AuthorDTO;
 import com.matheusluizago.libraryapi.controller.dto.ErrorResponse;
+import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
+import com.matheusluizago.libraryapi.exceptions.OperationNotAllowedException;
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.service.AuthorService;
 import org.apache.coyote.Response;
@@ -28,16 +30,22 @@ public class AuthorController {
 
     @PostMapping
     //Response Entity são os dados de uma resposta (200, 404 e etc)
-    //Ta usando void pq nn tem body de resposta
-    public ResponseEntity<Void> save(@RequestBody AuthorDTO authorDto){
-        var authorEntity = authorDto.mapToAuthor();
-        service.save(authorEntity);
+    //Object ta sendo colocado pq ele pode voltar tanto sem nada qnt com o body do erro
+    public ResponseEntity<Object> save(@RequestBody AuthorDTO authorDto){
+        try{
+            var authorEntity = authorDto.mapToAuthor();
+            service.save(authorEntity);
 
-        //Criando link pra acessar
-        //http://localhost:8080/authors/{id}
-        URI localtion = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(authorEntity.getId()).toUri();
+            //Criando link pra acessar
+            //http://localhost:8080/authors/{id}
+            URI localtion = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(authorEntity.getId()).toUri();
 
-       return ResponseEntity.created(localtion).build();
+            return ResponseEntity.created(localtion).build();
+        }catch (DuplicateRegisterException e){
+            var errorDTO = ErrorResponse.conflict(e.getMessage());
+            return ResponseEntity.status(errorDTO.status()).body(errorDTO);
+        }
+
     }
 
     @GetMapping("{id}")
@@ -55,16 +63,21 @@ public class AuthorController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") String id){
-        var idAuthor = UUID.fromString(id);
-        Optional<Author> authorOptional = service.getById(idAuthor);
+    public ResponseEntity<Object> delete(@PathVariable("id") String id){
+        try {
+            var idAuthor = UUID.fromString(id);
+            Optional<Author> authorOptional = service.getById(idAuthor);
 
-        if(authorOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            if (authorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            service.delete(authorOptional.get());
+            return ResponseEntity.noContent().build();
+        }catch (OperationNotAllowedException error){
+            var errorResponse = ErrorResponse.defaultResponse(error.getMessage());
+            return ResponseEntity.status(errorResponse.status()).body(errorResponse);
         }
-
-        service.delete(authorOptional.get());
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
@@ -82,22 +95,27 @@ public class AuthorController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") String id, @RequestBody AuthorDTO dto){
-        var idAuthor = UUID.fromString(id);
-        Optional<Author> authorOptional = service.getById(idAuthor);
+    public ResponseEntity<Object> update(@PathVariable("id") String id, @RequestBody AuthorDTO dto){
+        try{
+            var idAuthor = UUID.fromString(id);
+            Optional<Author> authorOptional = service.getById(idAuthor);
 
-        if(authorOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            if(authorOptional.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+
+            var author = authorOptional.get();
+            author.setName(dto.name());
+            author.setNationality(dto.nationality());
+            author.setBirthdate(dto.birthDate());
+
+            service.update(author);
+
+            return ResponseEntity.noContent().build();
+        }catch (DuplicateRegisterException e){
+            var errorDTO = ErrorResponse.conflict(e.getMessage());
+            return ResponseEntity.status(errorDTO.status()).body(errorDTO);
         }
-
-        var author = authorOptional.get();
-        author.setName(dto.name());
-        author.setNationality(dto.nationality());
-        author.setBirthdate(dto.birthDate());
-
-        service.update(author);
-
-        return ResponseEntity.noContent().build();
 
     }
 
