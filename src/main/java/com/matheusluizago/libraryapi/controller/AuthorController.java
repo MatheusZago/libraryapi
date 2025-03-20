@@ -6,8 +6,7 @@ import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
 import com.matheusluizago.libraryapi.exceptions.OperationNotAllowedException;
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.service.AuthorService;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,7 +30,7 @@ public class AuthorController {
     @PostMapping
     //Response Entity são os dados de uma resposta (200, 404 e etc)
     //Object ta sendo colocado pq ele pode voltar tanto sem nada qnt com o body do erro
-    public ResponseEntity<Object> save(@RequestBody AuthorDTO authorDto){
+    public ResponseEntity<Object> save(@RequestBody @Valid AuthorDTO authorDto){
         try{
             var authorEntity = authorDto.mapToAuthor();
             service.save(authorEntity);
