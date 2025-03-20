@@ -5,6 +5,8 @@ import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.repository.AuthorRepository;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import com.matheusluizago.libraryapi.validator.AuthorValidator;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,6 +61,21 @@ public class AuthorService {
         } else {
             return repository.findAll();
         }
+    }
+
+    public List<Author> searchByExample(String name, String nationality){
+        var author = new Author();
+        author.setName(name);
+        author.setNationality(nationality);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreNullValues() //Ele desocnsidera qualquer campo que vier nulo
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING); //Pega para se conter o valor, não precisa ser exato
+        Example<Author> authorExample = Example.of(author, matcher);
+
+        return repository.findAll(authorExample);
     }
 
     public boolean hasBook(Author author){
