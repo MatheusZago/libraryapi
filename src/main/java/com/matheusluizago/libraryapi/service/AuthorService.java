@@ -72,6 +72,7 @@ public class AuthorService {
                 .matching()
                 .withIgnoreNullValues() //Ele desocnsidera qualquer campo que vier nulo
                 .withIgnoreCase()
+                .withIgnorePaths("id", "dateBirth") //Ele vai ignorar essas coisas se vierem
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING); //Pega para se conter o valor, não precisa ser exato
         Example<Author> authorExample = Example.of(author, matcher);
 
