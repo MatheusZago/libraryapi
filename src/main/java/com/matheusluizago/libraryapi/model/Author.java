@@ -29,7 +29,7 @@ public class Author {
 
     //Colocando uma lista de todos os lviros do author.
     //Isso é pra mostrar q nn é uma coluna no BD, e que ele é mapeado pela variavel chamada de author na classe livros
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author")
     private List<Book> books;
 
     @CreatedDate //Sempre que for persistir a info ele coloca a data e hora atual
