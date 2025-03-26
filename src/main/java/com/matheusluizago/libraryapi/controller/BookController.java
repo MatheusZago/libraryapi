@@ -17,28 +17,23 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("books")
-public class BookController implements GenericController{
+public class BookController implements GenericController {
 
     private final BookService service;
     private final BookMapper mapper;
 
-    public BookController(BookService service, BookMapper mapper){
+    public BookController(BookService service, BookMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid RegisterBookDTO bookDTO){
-        try{
-            Book book = mapper.toEntity(bookDTO);
-            service.save(book);
+    public ResponseEntity<Void> save(@RequestBody @Valid RegisterBookDTO bookDTO) {
+        Book book = mapper.toEntity(bookDTO);
+        service.save(book);
 
-            var url = generateHeaderLocation(book.getId());
+        var url = generateHeaderLocation(book.getId());
 
-            return ResponseEntity.created(url ).build();
-        }catch (DuplicateRegisterException e){
-            var errorDTO = ErrorResponse.conflict(e.getMessage());
-            return ResponseEntity.status(errorDTO.status()).body(errorDTO);
-        }
+        return ResponseEntity.created(url).build();
     }
 }
