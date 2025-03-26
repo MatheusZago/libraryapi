@@ -2,6 +2,7 @@ package com.matheusluizago.libraryapi.controller;
 
 import com.matheusluizago.libraryapi.controller.dto.AuthorDTO;
 import com.matheusluizago.libraryapi.controller.dto.ErrorResponse;
+import com.matheusluizago.libraryapi.controller.mappers.AuthorMapper;
 import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
 import com.matheusluizago.libraryapi.exceptions.OperationNotAllowedException;
 import com.matheusluizago.libraryapi.model.Author;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,9 +24,11 @@ import java.util.stream.Collectors;
 public class AuthorController {
 
     private final AuthorService service;
+    private final AuthorMapper mapper;
 
-    public AuthorController(AuthorService service){
+    public AuthorController(AuthorService service, AuthorMapper mapper){
         this.service = service;
+        this.mapper = mapper;
     }
 
     @PostMapping
@@ -32,7 +36,8 @@ public class AuthorController {
     //Object ta sendo colocado pq ele pode voltar tanto sem nada qnt com o body do erro
     public ResponseEntity<Object> save(@RequestBody @Valid AuthorDTO authorDto){
         try{
-            var authorEntity = authorDto.mapToAuthor();
+//            var authorEntity = authorDto.mapToAuthor();
+            Author authorEntity = mapper.toEntity(authorDto);
             service.save(authorEntity);
 
             //Criando link pra acessar
@@ -52,13 +57,12 @@ public class AuthorController {
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
 
-        if(authorOptional.isPresent()){
-            Author author = authorOptional.get();
-            AuthorDTO dto = new AuthorDTO(author.getId(), author.getName(), author.getBirthdate(), author.getNationality());
+        //Usando mapper
+        return service.getById(idAuthor).map(author -> {
+            AuthorDTO dto = mapper.toDTO(author);
             return ResponseEntity.ok(dto);
-        }
+        }).orElseGet(() -> ResponseEntity.notFound().build());
 
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("{id}")
@@ -86,11 +90,15 @@ public class AuthorController {
 
         List<Author> result = service.searchByExample(name, nationality);
         //Passando uma transformação pra cada um
-        List<AuthorDTO> list = result.stream().map(author ->
-                new AuthorDTO(author.getId(), author.getName(), author.getBirthdate(), author.getNationality())
-        ).collect(Collectors.toList());
+        List<AuthorDTO> list = result
+                .stream()
+                .map(mapper::toDTO)
+        .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
+    }
+
+    private void collect(Collector<Object,?, List<Object>> list) {
     }
 
     @PutMapping("{id}")
