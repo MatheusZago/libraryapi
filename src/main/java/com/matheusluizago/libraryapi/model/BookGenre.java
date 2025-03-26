@@ -1,6 +1,6 @@
 package com.matheusluizago.libraryapi.model;
 
-public enum GenreBook {
+public enum BookGenre {
     FICTION,
     FANTASY,
     MYSTERY,

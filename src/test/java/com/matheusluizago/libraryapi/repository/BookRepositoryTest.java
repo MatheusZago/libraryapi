@@ -2,7 +2,7 @@ package com.matheusluizago.libraryapi.repository;
 
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.model.Book;
-import com.matheusluizago.libraryapi.model.GenreBook;
+import com.matheusluizago.libraryapi.model.BookGenre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +12,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BookRepositoryTest {
@@ -29,7 +27,7 @@ class BookRepositoryTest {
         Book book = new Book();
         book.setIsbn("90778-84874");
         book.setPrice(BigDecimal.valueOf(100));
-        book.setGenre(GenreBook.SCIENCE);
+        book.setGenre(BookGenre.SCIENCE);
         book.setTitle("SCIENCE BOOK");
         book.setPublicationDate(LocalDate.of(1980, 1, 2));
 
@@ -47,7 +45,7 @@ class BookRepositoryTest {
         Book book = new Book();
         book.setIsbn("90778-84874");
         book.setPrice(BigDecimal.valueOf(100));
-        book.setGenre(GenreBook.FICTION);
+        book.setGenre(BookGenre.FICTION);
         book.setTitle("UFO");
         book.setPublicationDate(LocalDate.of(1980, 01, 2));
 
@@ -161,19 +159,19 @@ class BookRepositoryTest {
 
     @Test
     void listByGenreQueryParamTest(){
-        var result = bookRepository.findByGenre(GenreBook.FICTION, "price");
+        var result = bookRepository.findByGenre(BookGenre.FICTION, "price");
         result.forEach(System.out::println);
     }
 
     @Test
     void listByGenreQueryParamPositionalTest(){
-        var result = bookRepository.findByGenrePositional(GenreBook.FICTION, "price");
+        var result = bookRepository.findByGenrePositional(BookGenre.FICTION, "price");
         result.forEach(System.out::println);
     }
 
     @Test
     void deleteByGenreTest(){
-        bookRepository.deleteByGenre(GenreBook.SCIENCE);
+        bookRepository.deleteByGenre(BookGenre.SCIENCE);
     }
 
     @Test

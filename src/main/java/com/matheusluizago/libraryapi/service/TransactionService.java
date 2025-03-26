@@ -2,11 +2,10 @@ package com.matheusluizago.libraryapi.service;
 
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.model.Book;
-import com.matheusluizago.libraryapi.model.GenreBook;
+import com.matheusluizago.libraryapi.model.BookGenre;
 import com.matheusluizago.libraryapi.repository.AuthorRepository;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +62,7 @@ public class TransactionService {
         Book book = new Book();
         book.setIsbn("90778-84874");
         book.setPrice(BigDecimal.valueOf(100));
-        book.setGenre(GenreBook.FICTION);
+        book.setGenre(BookGenre.FICTION);
         book.setTitle("Livro da Francisca");
         book.setPublicationDate(LocalDate.of(1980, 01, 2));
 
