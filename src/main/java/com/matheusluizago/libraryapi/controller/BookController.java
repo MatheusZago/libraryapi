@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("books")
-public class BookController {
+public class BookController implements GenericController{
 
     private final BookService service;
     private final BookMapper mapper;
@@ -31,8 +33,9 @@ public class BookController {
             Book book = mapper.toEntity(bookDTO);
             service.save(book);
 
+            var url = generateHeaderLocation(book.getId());
 
-            return ResponseEntity.ok(book);
+            return ResponseEntity.created(url ).build();
         }catch (DuplicateRegisterException e){
             var errorDTO = ErrorResponse.conflict(e.getMessage());
             return ResponseEntity.status(errorDTO.status()).body(errorDTO);

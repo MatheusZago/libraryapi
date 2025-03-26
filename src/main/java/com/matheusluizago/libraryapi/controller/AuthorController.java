@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/authors")
-public class AuthorController {
+public class AuthorController implements GenericController{
 
     private final AuthorService service;
     private final AuthorMapper mapper;
@@ -36,14 +36,11 @@ public class AuthorController {
     //Object ta sendo colocado pq ele pode voltar tanto sem nada qnt com o body do erro
     public ResponseEntity<Object> save(@RequestBody @Valid AuthorDTO authorDto){
         try{
-//            var authorEntity = authorDto.mapToAuthor();
             Author authorEntity = mapper.toEntity(authorDto);
             service.save(authorEntity);
 
-            //Criando link pra acessar
             //http://localhost:8080/authors/{id}
-            URI localtion = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(authorEntity.getId()).toUri();
-
+            URI localtion = generateHeaderLocation(authorEntity.getId());
             return ResponseEntity.created(localtion).build();
         }catch (DuplicateRegisterException e){
             var errorDTO = ErrorResponse.conflict(e.getMessage());
