@@ -4,6 +4,7 @@ import com.matheusluizago.libraryapi.model.Book;
 import com.matheusluizago.libraryapi.model.BookGenre;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import com.matheusluizago.libraryapi.repository.specs.BookSpecs;
+import com.matheusluizago.libraryapi.validator.BookValidator;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,15 @@ import java.util.UUID;
 public class BookService {
 
     private final BookRepository repository;
+    private final BookValidator validator;
 
-     public BookService(BookRepository repository){
+     public BookService(BookRepository repository, BookValidator validator){
          this.repository = repository;
+         this.validator = validator;
      }
 
     public Book save(Book book) {
+         validator.validate(book);
          return repository.save(book);
     }
 
@@ -66,6 +70,7 @@ public class BookService {
              throw new IllegalArgumentException("It is necessarity to have the book already in the database to update it.");
          }
 
+         validator.validate(book);
          repository.save(book);
     }
 }

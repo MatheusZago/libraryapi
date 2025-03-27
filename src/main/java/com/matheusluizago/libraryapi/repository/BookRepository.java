@@ -25,7 +25,7 @@ public interface BookRepository extends JpaRepository<Book, UUID>,
 
     List<Book> findByTitle(String title);
 
-    List<Book> findByIsbn(String isbn);
+    Optional<Book> findByIsbn(String isbn);
 
     List<Book> findByTitleAndPrice(String title, BigDecimal price);
 
