@@ -5,6 +5,9 @@ import com.matheusluizago.libraryapi.model.BookGenre;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import com.matheusluizago.libraryapi.repository.specs.BookSpecs;
 import com.matheusluizago.libraryapi.validator.BookValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +39,14 @@ public class BookService {
          repository.delete(book);
     }
 
-    public List<Book> searchByFilter(String isbn, String title, String authorName, BookGenre genre, Integer publishYear){
+    public Page<Book> searchByFilter(
+            String isbn,
+            String title,
+            String authorName,
+            BookGenre genre,
+            Integer publishYear,
+            Integer page,
+            Integer sizePage){
 
         //SELECT * FROM book WHERE 0 = 0 //Fazendo uma consulta variavel
         Specification<Book> specs = Specification.where(((root, query, cb) -> cb.conjunction()));
@@ -62,7 +72,9 @@ public class BookService {
             specs = specs.and(BookSpecs.nameAuthorLike(authorName));
         }
 
-         return repository.findAll(specs);
+        Pageable pageRequest = PageRequest.of(page, sizePage);
+
+         return repository.findAll(specs, pageRequest);
     }
 
     public void update(Book book) {

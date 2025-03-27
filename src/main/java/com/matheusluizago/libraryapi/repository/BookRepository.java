@@ -3,6 +3,8 @@ package com.matheusluizago.libraryapi.repository;
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.model.Book;
 import com.matheusluizago.libraryapi.model.BookGenre;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
