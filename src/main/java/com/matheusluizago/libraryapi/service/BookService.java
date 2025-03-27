@@ -34,7 +34,6 @@ public class BookService {
 
     public List<Book> searchByFilter(String isbn, String title, String authorName, BookGenre genre, Integer publishYear){
 
-
         //SELECT * FROM book WHERE 0 = 0 //Fazendo uma consulta variavel
         Specification<Book> specs = Specification.where(((root, query, cb) -> cb.conjunction()));
 
@@ -51,6 +50,10 @@ public class BookService {
             specs = specs.and(BookSpecs.genreEqual(genre));
         }
 
-         return repository.findAll(BookSpecs.isbnEqual(isbn));
+        if(publishYear != null){
+            specs = specs.and(BookSpecs.publishYearEqual(publishYear));
+        }
+
+         return repository.findAll(specs);
     }
 }

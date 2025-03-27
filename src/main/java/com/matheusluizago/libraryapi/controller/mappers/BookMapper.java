@@ -16,7 +16,7 @@ public abstract class BookMapper {
 
     //Ta mapeando o valor author com uma expressão, pra definir author ele vai dar um findById
     @Mapping(target = "author", expression = "java( authorRepository.findById(dto.authorId()).orElse(null) )")
-    @Mapping(target = "publicationDate", source = "publishDate")
+//    @Mapping(target = "publicationDate", source = "publishDate")
     public abstract Book toEntity(RegisterBookDTO dto);
 
 

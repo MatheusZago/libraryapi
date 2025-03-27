@@ -4,12 +4,16 @@ import com.matheusluizago.libraryapi.controller.dto.RegisterBookDTO;
 import com.matheusluizago.libraryapi.controller.dto.ResultSearchBookDTO;
 import com.matheusluizago.libraryapi.controller.mappers.BookMapper;
 import com.matheusluizago.libraryapi.model.Book;
+import com.matheusluizago.libraryapi.model.BookGenre;
 import com.matheusluizago.libraryapi.service.BookService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("books")
@@ -49,5 +53,26 @@ public class BookController implements GenericController {
                     return ResponseEntity.noContent().build();
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<List<ResultSearchBookDTO>> search(
+            @RequestParam(value = "isbn", required = false)
+            String isbn,
+            @RequestParam(value = "title", required = false)
+            String title,
+            @RequestParam(value = "name-author", required = false)
+            String nameAuthor,
+            @RequestParam(value = "genre", required = false)
+            BookGenre genre,
+            @RequestParam(value = "publish-year", required = false)
+            Integer publishYear){
+
+        var result = service.searchByFilter(isbn, title, nameAuthor, genre, publishYear);
+        var list = result.stream().map(mapper:: toDTO).collect(Collectors.toList());
+
+        return ResponseEntity.ok(list);
+    }
+
+
 
 }
