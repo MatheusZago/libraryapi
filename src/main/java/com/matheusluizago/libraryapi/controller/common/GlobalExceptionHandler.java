@@ -4,6 +4,7 @@ package com.matheusluizago.libraryapi.controller.common;
 import com.matheusluizago.libraryapi.controller.dto.ErrorField;
 import com.matheusluizago.libraryapi.controller.dto.ErrorResponse;
 import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
+import com.matheusluizago.libraryapi.exceptions.InvalidFieldException;
 import com.matheusluizago.libraryapi.exceptions.OperationNotAllowedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleOperationNotAllowedException(OperationNotAllowedException e) {
         return ErrorResponse.defaultResponse(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidFieldException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorResponse handleInvalidFieldException(InvalidFieldException e){
+        return new ErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "Validation Error", List.of(new ErrorField(e.getField(), e.getMessage())));
     }
 
     @ExceptionHandler(RuntimeException.class)

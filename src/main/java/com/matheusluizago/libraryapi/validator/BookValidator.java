@@ -1,6 +1,7 @@
 package com.matheusluizago.libraryapi.validator;
 
 import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
+import com.matheusluizago.libraryapi.exceptions.InvalidFieldException;
 import com.matheusluizago.libraryapi.model.Book;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,8 @@ import java.util.Optional;
 
 @Component
 public class BookValidator {
+
+    private static final int YEAR_PRICE_REQUIRED = 2020;
 
     private final BookRepository repository;
 
@@ -20,6 +23,17 @@ public class BookValidator {
         if(existsBookWithIsbn(book)){
             throw new DuplicateRegisterException("ISBN already registered.");
         }
+
+        if(isPriceObrigatoryNull(book)){
+            throw new InvalidFieldException("price", "For books with publish date after 2020 the price is required.");
+        }
+
+    }
+
+    //Se um desses for V ele vai voltar como true
+    private boolean isPriceObrigatoryNull(Book book) {
+        return book.getPrice() == null &&
+                book.getPublicationDate().getYear() >= YEAR_PRICE_REQUIRED;
 
     }
 
