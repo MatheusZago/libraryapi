@@ -1,6 +1,5 @@
 package com.matheusluizago.libraryapi.controller.dto;
 
-import com.matheusluizago.libraryapi.model.Author;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -21,13 +20,5 @@ public record AuthorDTO(
         @NotBlank(message = "Required field.")
         @Size(min = 2, max = 100, message = "Field size invalid.")
         String nationality) {
-
-    public Author mapToAuthor(){
-        Author author = new Author();
-        author.setName(name);
-        author.setBirthdate(birthDate);
-        author.setNationality(nationality);
-        return author;
-    }
 
 }

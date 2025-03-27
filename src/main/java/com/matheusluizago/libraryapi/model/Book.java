@@ -1,14 +1,19 @@
 package com.matheusluizago.libraryapi.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "book")
+@EntityListeners(AuditingEntityListener.class)
 public class Book {
 
     @Id
@@ -27,7 +32,7 @@ public class Book {
 
     @Enumerated(EnumType.STRING) //Fazendo usar os enums
     @Column(name = "genre", length = 30, nullable = false)
-    private GenreBook genre;
+    private BookGenre genre;
 
     @Column(name = "price", precision = 18, scale = 2)
     private BigDecimal price;
@@ -38,11 +43,22 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @CreatedDate //Sempre que for persistir a info ele coloca a data e hora atual
+    @Column(name = "date_register")
+    private LocalDateTime dateRegister;
+
+    @LastModifiedDate //Sempre q atualizar preenche com data atual
+    @Column(name = "date_update")
+    private LocalDateTime dateUpdate;
+
+    @Column(name = "user_id")
+    private UUID userId;
+
     @Deprecated
     public Book() {
     }
 
-    public Book(UUID id, String isbn, String title, LocalDate publicationDate, GenreBook genre, BigDecimal price, Author author) {
+    public Book(UUID id, String isbn, String title, LocalDate publicationDate, BookGenre genre, BigDecimal price, Author author) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -84,11 +100,11 @@ public class Book {
         this.publicationDate = publicationDate;
     }
 
-    public GenreBook getGenre() {
+    public BookGenre getGenre() {
         return genre;
     }
 
-    public void setGenre(GenreBook genre) {
+    public void setGenre(BookGenre genre) {
         this.genre = genre;
     }
 
@@ -106,6 +122,30 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public LocalDateTime getDateRegister() {
+        return dateRegister;
+    }
+
+    public void setDateRegister(LocalDateTime dateRegister) {
+        this.dateRegister = dateRegister;
+    }
+
+    public LocalDateTime getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(LocalDateTime dateUpdate) {
+        this.dateUpdate = dateUpdate;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     @Override

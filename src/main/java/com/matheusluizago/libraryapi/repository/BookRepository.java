@@ -2,8 +2,11 @@ package com.matheusluizago.libraryapi.repository;
 
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.model.Book;
-import com.matheusluizago.libraryapi.model.GenreBook;
+import com.matheusluizago.libraryapi.model.BookGenre;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,16 +15,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface BookRepository extends JpaRepository<Book, UUID> {
+public interface BookRepository extends JpaRepository<Book, UUID>,
+        JpaSpecificationExecutor<Book> //pra pesquisas mais especificas
+         {
 
     //Query method
     List<Book> findByAuthor(Author author);
 
     List<Book> findByTitle(String title);
 
-    List<Book> findByIsbn(String isbn);
+    Optional<Book> findByIsbn(String isbn);
 
     List<Book> findByTitleAndPrice(String title, BigDecimal price);
 
@@ -65,16 +71,16 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
 
     //Named Parameters
     @Query("SELECT b FROM Book b WHERE b.genre = :genre ORDER BY :param")
-    List<Book> findByGenre(@Param("genre") GenreBook genreBook, @Param("param") String param);
+    List<Book> findByGenre(@Param("genre") BookGenre bookGenre, @Param("param") String param);
 
     //Positional parameters
     @Query("SELECT b FROM Book b WHERE b.genre = ?1 ORDER BY ?2")
-    List<Book> findByGenrePositional(GenreBook genreBook, String param);
+    List<Book> findByGenrePositional(BookGenre bookGenre, String param);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Book WHERE genre = ?1")
-    void deleteByGenre(GenreBook genre);
+    void deleteByGenre(BookGenre genre);
 
     @Modifying
     @Transactional //Só pra teste, SEMPRE coloque WHERE
@@ -82,5 +88,6 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     void updateDataPublication(LocalDate newDate);
 
     boolean existsByAuthor(Author author);
+
 
 }
