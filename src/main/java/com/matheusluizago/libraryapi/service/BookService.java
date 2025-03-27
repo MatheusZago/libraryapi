@@ -60,4 +60,12 @@ public class BookService {
 
          return repository.findAll(specs);
     }
+
+    public void update(Book book) {
+         if(book.getId() == null) {
+             throw new IllegalArgumentException("It is necessarity to have the book already in the database to update it.");
+         }
+
+         repository.save(book);
+    }
 }
