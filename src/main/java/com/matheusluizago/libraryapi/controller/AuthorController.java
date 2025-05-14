@@ -28,8 +28,6 @@ public class AuthorController implements GenericController {
     }
 
     @PostMapping
-    //Response Entity são os dados de uma resposta (200, 404 e etc)
-    //Object ta sendo colocado pq ele pode voltar tanto sem nada qnt com o body do erro
     public ResponseEntity<Void> save(@RequestBody @Valid AuthorDTO authorDto) {
         //Aqui tinha o try catch, mas foi tirado pq as exceções tão sendo lidadas no GlobalExceptionHandelr
         Author authorEntity = mapper.toEntity(authorDto);
