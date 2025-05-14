@@ -16,8 +16,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable) //Garantees that the right page is the one sending the request, in this case is off
-                .formLogin(Customizer.withDefaults()) //Setting form to login, using the default one from Spring.
-                .httpBasic(Customizer.withDefaults())
+                .formLogin(configurer -> {
+                    configurer.loginPage("/login").permitAll();
+                }) //Setting form to use my login page.
+                //.httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.anyRequest().authenticated(); //All requests must be authenticated
                 })
