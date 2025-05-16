@@ -29,6 +29,8 @@ public class SecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/users/**").permitAll();
+
                     authorize.requestMatchers(HttpMethod.POST, "/authors**").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.DELETE, "/authors**").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.PUT, "/authors**").hasRole("ADMIN");
