@@ -43,10 +43,12 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
 
-        return new CustomUserDetailsService(userService);
+    //Disabled this one because now we are using the CustomAuthenticationProvider to provide the auth of the app.
+//    @Bean
+//    public UserDetailsService userDetailsService(UserService userService) {
+//
+//        return new CustomUserDetailsService(userService);
 
         //Creating in memory, above is the right way
 
@@ -64,5 +66,5 @@ public class SecurityConfiguration {
 
         //It is something that the class impelements
 //        return new InMemoryUserDetailsManager(user1, user2);
-    }
+//    }
 }
