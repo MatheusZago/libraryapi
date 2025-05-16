@@ -2,6 +2,7 @@ package com.matheusluizago.libraryapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,11 +24,17 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable) //Garantees that the right page is the one sending the request, in this case is off
                 .formLogin(configurer -> {
-                    configurer.loginPage("/login").permitAll();
-                }) //Setting form to use my login page.
+                    configurer.loginPage("/login");
+                })
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.anyRequest().authenticated(); //All requests must be authenticated
+                    authorize.requestMatchers("/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/authors**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.DELETE, "/authors**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.PUT, "/authors**").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/authors**").hasAnyRole("ADMIN", "USER");
+                    authorize.requestMatchers("/books/**").hasAnyRole("USER", "ADMIN");
+                    authorize.anyRequest().authenticated();
                 })
                 .build();
     }
