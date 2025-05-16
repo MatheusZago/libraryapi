@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "author", schema = "public")
-@EntityListeners(AuditingEntityListener.class) //Vai dizer q a classe escuta sempre q altera a entidade pra mexer nas anotations certas
+@EntityListeners(AuditingEntityListener.class) //This will make the class listen every change.
 public class Author {
 
     @Id
@@ -27,25 +27,23 @@ public class Author {
     @Column(name = "nationality", length = 50, nullable = false)
     private String nationality;
 
-    //Colocando uma lista de todos os lviros do author.
-    //Isso é pra mostrar q nn é uma coluna no BD, e que ele é mapeado pela variavel chamada de author na classe livros
+    //It is not a column, but a variable mapping in the book table called author.,
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 
-    @CreatedDate //Sempre que for persistir a info ele coloca a data e hora atual
+    @CreatedDate //Every time you persist an info it will use the date and time of the current moment
     @Column(name = "date_register")
     private LocalDateTime dateRegister;
 
-    @LastModifiedDate //Sempre q atualizar preenche com data atual
+    @LastModifiedDate //Every time it is modified it wirtes the date
     @Column(name = "date_update")
     private LocalDateTime dateUpdate;
 
-    @Column(name = "user_id")
-    private UUID userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-
-    @Deprecated //Tem que criar o construtor vazio para spring, mas pode deixar Deprecated pra ngm usar
+    @Deprecated //You need to create an empty constructor for spring, but you can make it deprecated so no one can use it
     public Author() {
     }
 
@@ -105,12 +103,12 @@ public class Author {
         this.dateUpdate = dateUpdate;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

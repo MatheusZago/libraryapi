@@ -3,10 +3,15 @@ package com.matheusluizago.libraryapi.controller;
 import com.matheusluizago.libraryapi.controller.dto.AuthorDTO;
 import com.matheusluizago.libraryapi.controller.mappers.AuthorMapper;
 import com.matheusluizago.libraryapi.model.Author;
+import com.matheusluizago.libraryapi.model.User;
+import com.matheusluizago.libraryapi.security.SecurityService;
 import com.matheusluizago.libraryapi.service.AuthorService;
+import com.matheusluizago.libraryapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -31,6 +36,7 @@ public class AuthorController implements GenericController {
     @PostMapping
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<Void> save(@RequestBody @Valid AuthorDTO authorDto) {
+
         //Aqui tinha o try catch, mas foi tirado pq as exceções tão sendo lidadas no GlobalExceptionHandelr
         Author authorEntity = mapper.toEntity(authorDto);
         service.save(authorEntity);
