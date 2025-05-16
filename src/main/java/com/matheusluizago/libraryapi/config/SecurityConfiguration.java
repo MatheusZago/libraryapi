@@ -1,5 +1,7 @@
 package com.matheusluizago.libraryapi.config;
 
+import com.matheusluizago.libraryapi.security.CustomUserDetailsService;
+import com.matheusluizago.libraryapi.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -47,21 +49,25 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+    public UserDetailsService userDetailsService(UserService userService) {
 
-        UserDetails user1 = User.builder()
-                .username("user")
-                .password(encoder.encode("123"))
-                .roles("USER")
-                .build();
+        return new CustomUserDetailsService(userService);
 
-        UserDetails user2 = User.builder()
-                .username("admin")
-                .password(encoder.encode("321"))
-                .roles("ADMIN")
-                .build();
+        //Creating in memory, above is the right way
+
+//        UserDetails user1 = User.builder()
+//                .username("user")
+//                .password(encoder.encode("123"))
+//                .roles("USER")
+//                .build();
+//
+//        UserDetails user2 = User.builder()
+//                .username("admin")
+//                .password(encoder.encode("321"))
+//                .roles("ADMIN")
+//                .build();
 
         //It is something that the class impelements
-        return new InMemoryUserDetailsManager(user1, user2);
+//        return new InMemoryUserDetailsManager(user1, user2);
     }
 }
