@@ -6,6 +6,7 @@ import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.service.AuthorService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class AuthorController implements GenericController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<Void> save(@RequestBody @Valid AuthorDTO authorDto) {
         //Aqui tinha o try catch, mas foi tirado pq as exceções tão sendo lidadas no GlobalExceptionHandelr
         Author authorEntity = mapper.toEntity(authorDto);
@@ -40,6 +42,7 @@ public class AuthorController implements GenericController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     public ResponseEntity<AuthorDTO> getDetails(@PathVariable("id") String id) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
@@ -53,6 +56,7 @@ public class AuthorController implements GenericController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<Void> delete(@PathVariable("id") String id) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
@@ -66,6 +70,7 @@ public class AuthorController implements GenericController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     public ResponseEntity<List<AuthorDTO>> search(
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "nationality", required = false) String nationality) {
@@ -84,6 +89,7 @@ public class AuthorController implements GenericController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<Void> update(@PathVariable("id") String id, @RequestBody AuthorDTO dto) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
