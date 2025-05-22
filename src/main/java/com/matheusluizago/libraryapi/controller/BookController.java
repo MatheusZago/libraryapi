@@ -7,14 +7,12 @@ import com.matheusluizago.libraryapi.model.Book;
 import com.matheusluizago.libraryapi.model.BookGenre;
 import com.matheusluizago.libraryapi.service.BookService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("books")
@@ -29,6 +27,7 @@ public class BookController implements GenericController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     public ResponseEntity<Void> save(@RequestBody @Valid RegisterBookDTO bookDTO) {
         Book book = mapper.toEntity(bookDTO);
         service.save(book);
@@ -38,6 +37,7 @@ public class BookController implements GenericController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     public ResponseEntity<ResultSearchBookDTO> getDetails(@PathVariable("id") String id){
         return service.getById(UUID.fromString(id))
                 .map(book -> {
@@ -46,6 +46,7 @@ public class BookController implements GenericController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     @DeleteMapping("{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") String id){
         return service.getById(UUID.fromString(id))
@@ -55,6 +56,7 @@ public class BookController implements GenericController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     @GetMapping
     public ResponseEntity<Page<ResultSearchBookDTO>> search(
             @RequestParam(value = "isbn", required = false)
@@ -80,6 +82,7 @@ public class BookController implements GenericController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
     @PutMapping("{id}")
     public ResponseEntity<Object> update(@PathVariable("id") String id, @RequestBody @Valid RegisterBookDTO bookDTO){
         return service.getById(UUID.fromString(id))

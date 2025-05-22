@@ -51,8 +51,9 @@ public class Book {
     @Column(name = "date_update")
     private LocalDateTime dateUpdate;
 
-    @Column(name = "user_id")
-    private UUID userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Deprecated
     public Book() {
@@ -140,12 +141,12 @@ public class Book {
         this.dateUpdate = dateUpdate;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

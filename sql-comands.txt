@@ -22,6 +22,14 @@ CREATE TABLE book(
     user_id UUID
 );
 
+CREATE TABLE users(
+    id uuid NOT NULL PRIMARY KEY,
+    login VARCHAR(20) NOT NULL UNIQUE,
+    password VARCHAR(300) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    roles VARCHAR[]
+);
+
 SELECT * FROM author;
 SELECT * FROM book;
 

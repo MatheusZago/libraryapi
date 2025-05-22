@@ -12,3 +12,10 @@ spring:
       ddl-auto: none #Definindo estragédia para ele criar o banco e atualizar ele, mas ele se mantem qnd fecha
     properties:
       hibernate.format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT_ID_GOOGLE}
+            client-secret: ${CLIENT_SECRET_GOOGLE}
