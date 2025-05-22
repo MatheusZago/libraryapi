@@ -2,8 +2,10 @@ package com.matheusluizago.libraryapi.service;
 
 import com.matheusluizago.libraryapi.exceptions.OperationNotAllowedException;
 import com.matheusluizago.libraryapi.model.Author;
+import com.matheusluizago.libraryapi.model.User;
 import com.matheusluizago.libraryapi.repository.AuthorRepository;
 import com.matheusluizago.libraryapi.repository.BookRepository;
+import com.matheusluizago.libraryapi.security.SecurityService;
 import com.matheusluizago.libraryapi.validator.AuthorValidator;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -19,15 +21,20 @@ public class AuthorService {
     private final AuthorRepository repository;
     private final AuthorValidator validator;
     private final BookRepository bookRepository;
+    private final SecurityService securityService;
 
-    public AuthorService(AuthorRepository repository, AuthorValidator validator, BookRepository bookRepository){
+    public AuthorService(AuthorRepository repository, AuthorValidator validator,
+                         BookRepository bookRepository, SecurityService securityService){
         this.repository = repository;
         this.validator = validator;
         this.bookRepository = bookRepository;
+        this.securityService = securityService;
     }
 
     public Author save(Author author){
         validator.validate(author);
+        User user = securityService.getLoggedUser();
+        author.setUser(user); //Getting id for the user for auditing
         return repository.save(author);
     }
 

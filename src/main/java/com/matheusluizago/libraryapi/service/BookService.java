@@ -2,8 +2,10 @@ package com.matheusluizago.libraryapi.service;
 
 import com.matheusluizago.libraryapi.model.Book;
 import com.matheusluizago.libraryapi.model.BookGenre;
+import com.matheusluizago.libraryapi.model.User;
 import com.matheusluizago.libraryapi.repository.BookRepository;
 import com.matheusluizago.libraryapi.repository.specs.BookSpecs;
+import com.matheusluizago.libraryapi.security.SecurityService;
 import com.matheusluizago.libraryapi.validator.BookValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,14 +22,19 @@ public class BookService {
 
     private final BookRepository repository;
     private final BookValidator validator;
+    private final SecurityService securityService;
 
-     public BookService(BookRepository repository, BookValidator validator){
+     public BookService(BookRepository repository, BookValidator validator, SecurityService securityService){
          this.repository = repository;
          this.validator = validator;
+         this.securityService = securityService;
+
      }
 
     public Book save(Book book) {
          validator.validate(book);
+         User user = securityService.getLoggedUser();
+         book.setUser(user);
          return repository.save(book);
     }
 
