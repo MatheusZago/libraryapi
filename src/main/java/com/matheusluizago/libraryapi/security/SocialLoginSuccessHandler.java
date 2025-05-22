@@ -13,9 +13,12 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class SocialLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+    private static final String DEFAULT_PASSWORD = "123";
 
     private final UserService userService;
 
@@ -35,10 +38,29 @@ public class SocialLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         User user = userService.getByEmail(email);
 
+        if(user == null){
+            user = registerUserWithGoogle(email);
+        }
+
         authentication = new CustomAuthentication(user);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         super.onAuthenticationSuccess(request, response, authentication);
+    }
+
+    private User registerUserWithGoogle(String email){
+        User user;
+        user = new User();
+        user.setEmail(email);
+        user.setLogin(createLoginByEmail(email));
+        user.setPassword(DEFAULT_PASSWORD);
+        user.setRoles(List.of("OPERATOR"));
+        userService.save(user);
+        return user;
+    }
+
+    private String createLoginByEmail(String email) {
+        return email.substring(0, email.indexOf("@"));
     }
 }
