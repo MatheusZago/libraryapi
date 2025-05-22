@@ -1,8 +1,11 @@
 package com.matheusluizago.libraryapi.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.annotation.processing.Generated;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +26,14 @@ public class Client {
     private String redirectURI;
 
     private String scope;
+
+    @CreatedDate
+    @Column(name = "date_register")
+    private LocalDateTime dateRegister;
+
+    @LastModifiedDate
+    @Column(name = "date_update")
+    private LocalDateTime dateUpdate;
 
     public UUID getId() {
         return id;
@@ -62,5 +73,21 @@ public class Client {
 
     public void setScope(String scope) {
         this.scope = scope;
+    }
+
+    public LocalDateTime getDateRegister() {
+        return dateRegister;
+    }
+
+    public void setDateRegister(LocalDateTime dateRegister) {
+        this.dateRegister = dateRegister;
+    }
+
+    public LocalDateTime getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(LocalDateTime dateUpdate) {
+        this.dateUpdate = dateUpdate;
     }
 }

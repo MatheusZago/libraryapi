@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS users(
     login VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(300) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
-    roles VARCHAR[]
+    roles VARCHAR[],
+    date_register TIMESTAMP,
+    date_update TIMESTAMP,
 );
 
 CREATE TABLE IF NOT EXISTS clients(
@@ -36,6 +38,8 @@ CREATE TABLE IF NOT EXISTS clients(
 	client_secret VARCHAR(400) NOT NULL,
 	redirect_uri VARCHAR(200) NOT NULL,
 	scope VARCHAR(50)
+	date_register TIMESTAMP,
+    date_update TIMESTAMP,
 );
 
 SELECT b.id, b.title as name_book, a.name as name_author

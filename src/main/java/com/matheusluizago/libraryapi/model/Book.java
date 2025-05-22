@@ -37,17 +37,15 @@ public class Book {
     @Column(name = "price", precision = 18, scale = 2)
     private BigDecimal price;
 
-    //Fazendo uma foreign key
-    @ManyToOne(fetch = FetchType.LAZY) //Não traz os dados do author, só do livro, se botar eager ele traz
-    //(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @CreatedDate //Sempre que for persistir a info ele coloca a data e hora atual
+    @CreatedDate
     @Column(name = "date_register")
     private LocalDateTime dateRegister;
 
-    @LastModifiedDate //Sempre q atualizar preenche com data atual
+    @LastModifiedDate
     @Column(name = "date_update")
     private LocalDateTime dateUpdate;
 

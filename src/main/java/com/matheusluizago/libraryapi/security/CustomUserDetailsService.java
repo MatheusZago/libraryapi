@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Optional;
+
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
@@ -16,18 +18,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userService.getByLogin(login);
+        Optional<User> user = userService.getByLogin(login);
 
-        if(user == null){
+        if(user.isEmpty()){
             throw new UsernameNotFoundException("User not found");
         }
 
         //Using user from userdetails
         return org.springframework.security.core.userdetails.User
                 .builder()
-                .username(user.getLogin())
-                .password(user.getPassword())
-                .roles(user.getRoles().toArray(new String[user.getRoles().size()]))
+                .username(user.get().getLogin())
+                .password(user.get().getPassword())
+                .roles(user.get().getRoles().toArray(new String[user.get().getRoles().size()]))
                 .build();
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CustomAuthenticationProvider  implements AuthenticationProvider {
 
@@ -26,18 +28,18 @@ public class CustomAuthenticationProvider  implements AuthenticationProvider {
         String login = authentication.getName();
         String inputPassword = authentication.getCredentials().toString();
 
-        User foundUser = userService.getByLogin(login);
+        Optional<User> foundUser = userService.getByLogin(login);
 
-        if(foundUser == null){
+        if(foundUser.isEmpty()){
             throw new UsernameNotFoundException("Username and/or password incorrect");
         }
 
-        String encryptedPassword = foundUser.getPassword();
+        String encryptedPassword = foundUser.get().getPassword();
 
         boolean passwordsCorrect = encoder.matches(inputPassword, encryptedPassword);
 
         if(passwordsCorrect){
-            return new CustomAuthentication(foundUser);
+            return new CustomAuthentication(foundUser.orElse(null));
         }
 
         throw new UsernameNotFoundException("Username and/or password incorrect");
