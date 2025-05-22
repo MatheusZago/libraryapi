@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "book")
+@Table(name = "books")
 @EntityListeners(AuditingEntityListener.class)
 public class Book {
 

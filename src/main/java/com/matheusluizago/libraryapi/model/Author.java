@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "author", schema = "public")
+@Table(name = "authors", schema = "public")
 @EntityListeners(AuditingEntityListener.class) //This will make the class listen every change.
 public class Author {
 
