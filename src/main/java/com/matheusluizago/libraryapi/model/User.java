@@ -21,6 +21,9 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private String email;
+
     @Type(ListArrayType.class) //Using hypersistance library to translante list to array in db
     @Column(name = "roles", columnDefinition = "varchar[]")
     private List<String> roles;
@@ -58,5 +61,13 @@ public class User {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

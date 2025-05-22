@@ -1,7 +1,18 @@
-package com.matheusluizago.libraryapi.controller.dto;
+        package com.matheusluizago.libraryapi.controller.dto;
 
-import java.util.List;
+        import jakarta.validation.constraints.Email;
+        import jakarta.validation.constraints.NotBlank;
 
-public record UserDTO(String login, String password, List<String> roles) {
+        import java.util.List;
 
-}
+        public record UserDTO(
+                @NotBlank(message = "Mandatory field.")
+                String login,
+                @Email(message = "Invalid email.")
+                @NotBlank(message = "Mandatory field.")
+                String email,
+                @NotBlank(message = "Mandatory field.")
+                String password,
+                List<String> roles) {
+
+        }

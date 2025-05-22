@@ -1,7 +1,6 @@
 package com.matheusluizago.libraryapi.config;
 
-import com.matheusluizago.libraryapi.security.CustomUserDetailsService;
-import com.matheusluizago.libraryapi.service.UserService;
+import com.matheusluizago.libraryapi.security.SocialLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilter(HttpSecurity http, SocialLoginSuccessHandler successHandler) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable) //Garantees that the right page is the one sending the request, in this case is off
 //                .formLogin(configurer -> {
@@ -35,7 +33,9 @@ public class SecurityConfiguration {
                     authorize.requestMatchers(HttpMethod.POST, "/users/**").permitAll();
                     authorize.anyRequest().authenticated();
                 })
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oath2 -> {
+                    oath2.successHandler(successHandler);
+                })
                 .build();
     }
 
