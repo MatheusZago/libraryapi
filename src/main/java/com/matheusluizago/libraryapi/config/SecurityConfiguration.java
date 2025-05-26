@@ -70,32 +70,4 @@ public class SecurityConfiguration {
         return converter;
     }
 
-    //Generates JWK - Json Web Key | Key 'signs' the token
-    @Bean
-    public JWKSource<SecurityContext> jwkSource() throws Exception{
-        RSAKey rsaKey = generateRSAKey(); //Cryptography with public and private keys
-        JWKSet jwkSet = new JWKSet(rsaKey);
-        return new ImmutableJWKSet<>(jwkSet);
-
-    }
-
-    private RSAKey generateRSAKey() throws Exception{
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(2048);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-
-        return new RSAKey
-                .Builder(publicKey)
-                .privateKey(privateKey)
-                .keyID(UUID.randomUUID().toString())
-                .build();
-    }
-
-    @Bean
-    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource){
-        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
-    }
 }
