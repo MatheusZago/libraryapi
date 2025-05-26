@@ -12,7 +12,7 @@ public class LoginViewController {
 
     @GetMapping("/login")
     public String loginPage(){
-        return "login"; //Returning with page to direct, same name as WebConfiguration
+        return "login";
     }
 
     @GetMapping("/")
