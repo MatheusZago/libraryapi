@@ -40,10 +40,7 @@ public class SecurityConfiguration {
                 .build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(10);
-    }
+
 
     @Bean //Using this we can take out the 'ROLE_" prefix from the app or change the prefix
     public GrantedAuthorityDefaults grantedAuthorityDefaults(){
