@@ -39,7 +39,7 @@ public class CustomAuthenticationProvider  implements AuthenticationProvider {
         boolean passwordsCorrect = encoder.matches(inputPassword, encryptedPassword);
 
         if(passwordsCorrect){
-            return new CustomAuthentication(foundUser.orElse(null));
+            return new CustomAuthentication(Optional.of(foundUser.orElse(null)));
         }
 
         throw new UsernameNotFoundException("Username and/or password incorrect");
