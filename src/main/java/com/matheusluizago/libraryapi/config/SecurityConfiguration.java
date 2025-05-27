@@ -52,6 +52,7 @@ public class SecurityConfiguration {
     }
 
     @Bean //Configure prefyx in token
+    //Cusotmizes the token
     public JwtAuthenticationConverter jwtAuthenticationConverter(){
         var authoritiesConverter = new JwtGrantedAuthoritiesConverter();
         authoritiesConverter.setAuthorityPrefix("");
