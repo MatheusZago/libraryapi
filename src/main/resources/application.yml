@@ -21,3 +21,6 @@ spring:
             client-secret: ${CLIENT_SECRET_GOOGLE}
 springdoc:
   override-with-generic-response: false
+logging:
+  file:
+    name: ./app.log
