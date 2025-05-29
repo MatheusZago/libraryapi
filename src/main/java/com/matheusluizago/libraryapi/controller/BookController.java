@@ -121,7 +121,7 @@ public class BookController implements GenericController {
                     book.setAuthor(entityAux.getAuthor());
                     book.setPrice(entityAux.getPrice());
                     book.setIsbn(entityAux.getIsbn());
-                    book.setPublicationDate(entityAux.getPublicationDate());
+                    book.setPublishDate(entityAux.getPublishDate());
                     book.setTitle(entityAux.getTitle());
 
                     service.update(book);

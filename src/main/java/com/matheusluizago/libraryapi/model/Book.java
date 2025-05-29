@@ -28,7 +28,7 @@ public class Book {
     private String title;
 
     @Column(name = "publish_date")
-    private LocalDate publicationDate;
+    private LocalDate publishDate;
 
     @Enumerated(EnumType.STRING) //Fazendo usar os enums
     @Column(name = "genre", length = 30, nullable = false)
@@ -57,11 +57,11 @@ public class Book {
     public Book() {
     }
 
-    public Book(UUID id, String isbn, String title, LocalDate publicationDate, BookGenre genre, BigDecimal price, Author author) {
+    public Book(UUID id, String isbn, String title, LocalDate publishDate, BookGenre genre, BigDecimal price, Author author) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
-        this.publicationDate = publicationDate;
+        this.publishDate = publishDate;
         this.genre = genre;
         this.price = price;
         this.author = author;
@@ -91,12 +91,12 @@ public class Book {
         this.title = title;
     }
 
-    public LocalDate getPublicationDate() {
-        return publicationDate;
+    public LocalDate getPublishDate() {
+        return publishDate;
     }
 
-    public void setPublicationDate(LocalDate publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setPublishDate(LocalDate publicationDate) {
+        this.publishDate = publicationDate;
     }
 
     public BookGenre getGenre() {
@@ -153,7 +153,7 @@ public class Book {
                 "id=" + id +
                 ", isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
-                ", publicationDate=" + publicationDate +
+                ", publicationDate=" + publishDate +
                 ", genre=" + genre +
                 ", price=" + price +
                 '}';
@@ -164,11 +164,11 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(publicationDate, book.publicationDate) && genre == book.genre && Objects.equals(price, book.price) && Objects.equals(author, book.author);
+        return Objects.equals(id, book.id) && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(publishDate, book.publishDate) && genre == book.genre && Objects.equals(price, book.price) && Objects.equals(author, book.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isbn, title, publicationDate, genre, price, author);
+        return Objects.hash(id, isbn, title, publishDate, genre, price, author);
     }
 }

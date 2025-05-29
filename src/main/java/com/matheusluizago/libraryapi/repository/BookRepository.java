@@ -33,7 +33,7 @@ public interface BookRepository extends JpaRepository<Book, UUID>,
 
     List<Book> findByTitleOrIsbn(String title, String isbn);
 
-    List<Book> findByPublicationDateBetween(LocalDate start, LocalDate end);
+    List<Book> findByPublishDateBetween(LocalDate start, LocalDate end);
 
     //Tbm tem LesserThan, GreaterThan, GreaterThanEqual, Before e After (pra data)
 
@@ -84,8 +84,8 @@ public interface BookRepository extends JpaRepository<Book, UUID>,
 
     @Modifying
     @Transactional //Só pra teste, SEMPRE coloque WHERE
-    @Query("UPDATE Book SET publicationDate = ?1")
-    void updateDataPublication(LocalDate newDate);
+    @Query("UPDATE Book SET publishDate = ?1")
+    void updatePublishDate(LocalDate newDate);
 
     boolean existsByAuthor(Author author);
 
