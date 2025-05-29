@@ -1,6 +1,7 @@
 package com.matheusluizago.libraryapi.controller.dto;
 
 import com.matheusluizago.libraryapi.model.BookGenre;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Schema(name = "Book")
 public record RegisterBookDTO(
         @ISBN
         @NotBlank(message = "Required field.")
