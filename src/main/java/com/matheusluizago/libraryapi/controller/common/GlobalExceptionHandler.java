@@ -6,6 +6,7 @@ import com.matheusluizago.libraryapi.controller.dto.ErrorResponse;
 import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
 import com.matheusluizago.libraryapi.exceptions.InvalidFieldException;
 import com.matheusluizago.libraryapi.exceptions.OperationNotAllowedException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,12 +20,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice //O Advice serve pra capturar exceptions e dar uma resposta Rest
+@Slf4j
 public class GlobalExceptionHandler {
 
     //Vai capturar essa exceção
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY) //Pra falar o erro
     public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("Validation error: ", e.getMessage());
+
         List<FieldError> fieldErrors = e.getFieldErrors();
         List<ErrorField> listErrors = fieldErrors
                 .stream()
@@ -36,18 +40,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateRegisterException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleDuplicateRegisterException(DuplicateRegisterException e) {
+        log.error("Conflict error: ", e.getMessage());
         return ErrorResponse.conflict(e.getMessage());
     }
 
     @ExceptionHandler(OperationNotAllowedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleOperationNotAllowedException(OperationNotAllowedException e) {
+        log.error("Operation not allowed error: ", e.getMessage());
         return ErrorResponse.defaultResponse(e.getMessage());
     }
 
     @ExceptionHandler(InvalidFieldException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErrorResponse handleInvalidFieldException(InvalidFieldException e){
+        log.error("Invalid field error: ", e.getMessage());
         return new ErrorResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 "Validation Error", List.of(new ErrorField(e.getField(), e.getMessage())));
@@ -56,9 +63,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ErrorResponse handleAccessDeniedException(AccessDeniedException e){
+        log.error("Access denied error: ", e.getMessage());
+
         return new ErrorResponse(
                 HttpStatus.FORBIDDEN.value(),
-                "Acess denied.",
+                "Access denied.",
                 List.of()
         );
     }
@@ -66,6 +75,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleUnhandledError(RuntimeException e){
+        log.error("Internal server error: ", e);
+
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Unexpected Error, contact administration.", List.of());
     }
 

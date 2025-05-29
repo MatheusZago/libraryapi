@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/authors")
 @Tag(name = "Authors")
@@ -42,6 +44,8 @@ public class AuthorController implements GenericController {
             @ApiResponse(responseCode = "409", description = "Author already registered.")
     })
     public ResponseEntity<Void> save(@RequestBody @Valid AuthorDTO authorDto) {
+
+        log.info("Registering new author: {}", authorDto.name());
 
         //Aqui tinha o try catch, mas foi tirado pq as exceções tão sendo lidadas no GlobalExceptionHandelr
         Author authorEntity = mapper.toEntity(authorDto);
@@ -81,6 +85,9 @@ public class AuthorController implements GenericController {
             @ApiResponse(responseCode = "400", description = "Cannot delete an author with a book.")
     })
     public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+
+        log.info("Deleting author with ID: {}", id);
+
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
 
