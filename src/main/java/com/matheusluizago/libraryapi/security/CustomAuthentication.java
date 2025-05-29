@@ -6,20 +6,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CustomAuthentication implements Authentication {
 
-    private final User user;
+    private final Optional<User> user;
 
-    public CustomAuthentication(User user) {
+    public CustomAuthentication(Optional<User> user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //Transform roles in authorities
-        return this.user
+        return this.user.get()
                 .getRoles()
                 .stream()
                 .map(SimpleGrantedAuthority::new)
@@ -54,10 +55,10 @@ public class CustomAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return user.getLogin();
+        return user.get().getLogin();
     }
 
-    public User getUser() {
+    public Optional<User> getUser() {
         return user;
     }
 }

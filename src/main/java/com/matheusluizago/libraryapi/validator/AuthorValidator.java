@@ -24,12 +24,10 @@ public class AuthorValidator {
     }
 
     private boolean existsRegisteredAuthor(Author author) {
-        // Busca um autor com o mesmo nome, data de nascimento e nacionalidade
         Optional<Author> foundAuthor = repository.findByNameAndBirthdateAndNationality(
                 author.getName(), author.getBirthdate(), author.getNationality());
 
         if (author.getId() == null) {
-            // Se o ID do autor for nulo (registrando um novo autor), retorna verdadeiro se o autor já existe
             return foundAuthor.isPresent();
         }
 

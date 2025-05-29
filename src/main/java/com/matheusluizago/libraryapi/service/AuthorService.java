@@ -33,8 +33,8 @@ public class AuthorService {
 
     public Author save(Author author){
         validator.validate(author);
-        User user = securityService.getLoggedUser();
-        author.setUser(user); //Getting id for the user for auditing
+        Optional<User> user = securityService.getLoggedUser();
+        author.setUser(user.orElse(null)); //Getting id for the user for auditing
         return repository.save(author);
     }
 
