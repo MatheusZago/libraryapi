@@ -30,7 +30,7 @@ class BookRepositoryTest {
         book.setPrice(BigDecimal.valueOf(100));
         book.setGenre(BookGenre.SCIENCE);
         book.setTitle("SCIENCE BOOK");
-        book.setPublicationDate(LocalDate.of(1980, 1, 2));
+        book.setPublishDate(LocalDate.of(1980, 1, 2));
 
         Author author = authorRepository.findById(UUID.fromString(
                 "f1377abb-c77d-44c4-8f81-9627cfc8ff32")).orElse(null);
@@ -48,7 +48,7 @@ class BookRepositoryTest {
         book.setPrice(BigDecimal.valueOf(100));
         book.setGenre(BookGenre.FICTION);
         book.setTitle("UFO");
-        book.setPublicationDate(LocalDate.of(1980, 01, 2));
+        book.setPublishDate(LocalDate.of(1980, 01, 2));
 
         Author author = new Author();
         author.setName("João");
@@ -121,7 +121,7 @@ class BookRepositoryTest {
     @Test
     void findBookByPublishedDateBetweenTest(){
 
-        List<Book> list = bookRepository.findByPublicationDateBetween(
+        List<Book> list = bookRepository.findByPublishDateBetween(
                 LocalDate.of(1999, 1, 1), LocalDate.of(2000, 1, 1));
         list.forEach(System.out::println);
     }
@@ -177,7 +177,7 @@ class BookRepositoryTest {
 
     @Test
     void updatePublicationDateTest(){
-        bookRepository.updateDataPublication(LocalDate.of(2000, 01, 01));
+        bookRepository.updatePublishDate(LocalDate.of(2000, 01, 01));
     }
 
 }

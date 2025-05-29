@@ -24,3 +24,18 @@ springdoc:
 logging:
   file:
     name: ./app.log
+  level:
+    root: warn
+    com:
+      matheusluizago:
+        controller: error
+    org:
+      springframework:
+        web: debug
+        security: trace
+
+#trace
+#debug
+#info
+#warn
+#error
