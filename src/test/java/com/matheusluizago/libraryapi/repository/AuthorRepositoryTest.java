@@ -81,7 +81,7 @@ public class AuthorRepositoryTest {
 		book.setPrice(BigDecimal.valueOf(204));
 		book.setGenre(BookGenre.MYSTERY);
 		book.setTitle("O roubo da casa assombrada");
-		book.setPublicationDate(LocalDate.of(1999, 3, 13));
+		book.setPublishDate(LocalDate.of(1999, 3, 13));
 		book.setAuthor(author);
 
 		//Botando livros na lsita do author
@@ -91,7 +91,7 @@ public class AuthorRepositoryTest {
 		book2.setPrice(BigDecimal.valueOf(204));
 		book2.setGenre(BookGenre.MYSTERY);
 		book2.setTitle("O roubo da casa assombrada");
-		book2.setPublicationDate(LocalDate.of(1999, 3, 13));
+		book2.setPublishDate(LocalDate.of(1999, 3, 13));
 		book2.setAuthor(author);
 
 		//Botando livros na lsita do author

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("books")
 @Tag(name = "Books")
+@Slf4j
 public class BookController implements GenericController {
 
     private final BookService service;
@@ -70,6 +72,7 @@ public class BookController implements GenericController {
             @ApiResponse(responseCode = "404", description = "Book not found.")
     })
     public ResponseEntity<Object> delete(@PathVariable("id") String id){
+        log.info("Deleting book with ID: {}", id);
         return service.getById(UUID.fromString(id))
                 .map(book -> {
                     service.delete(book);
@@ -121,7 +124,7 @@ public class BookController implements GenericController {
                     book.setAuthor(entityAux.getAuthor());
                     book.setPrice(entityAux.getPrice());
                     book.setIsbn(entityAux.getIsbn());
-                    book.setPublicationDate(entityAux.getPublicationDate());
+                    book.setPublishDate(entityAux.getPublishDate());
                     book.setTitle(entityAux.getTitle());
 
                     service.update(book);

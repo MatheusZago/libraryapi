@@ -33,7 +33,7 @@ public class BookValidator {
     //Se um desses for V ele vai voltar como true
     private boolean isPriceObrigatoryNull(Book book) {
         return book.getPrice() == null &&
-                book.getPublicationDate().getYear() >= YEAR_PRICE_REQUIRED;
+                book.getPublishDate().getYear() >= YEAR_PRICE_REQUIRED;
 
     }
 

@@ -1,6 +1,9 @@
 spring:
   application:
     name: libraryapi
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
     url: jdbc:postgresql://localhost:5432/library
     username: postgres
@@ -21,3 +24,29 @@ spring:
             client-secret: ${CLIENT_SECRET_GOOGLE}
 springdoc:
   override-with-generic-response: false
+logging:
+  pattern:
+    console:  '%clr(%d{dd-MM-yyyy HH:mm:ss}){faint} %clr(%5p) %clr([%t]){faint} %clr(%-40.40logger){cyan} %clr(:){yellow} %m%n'
+  file:
+    name: ./app.log
+  level:
+    root: warn
+    com:
+      matheusluizago: trace
+    org:
+      springframework:
+        web: debug
+        security: trace
+#trace
+#debug
+#info
+#warn
+#error
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: '*'

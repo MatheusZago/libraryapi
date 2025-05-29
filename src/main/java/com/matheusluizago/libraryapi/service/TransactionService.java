@@ -27,7 +27,7 @@ public class TransactionService {
                 findById(UUID.fromString("bbcc855e-52c7-47de-99b8-a4bfb03c287f"))
                 .orElse(null);
 
-        book.setPublicationDate(LocalDate.of(2004, 6, 13));
+        book.setPublishDate(LocalDate.of(2004, 6, 13));
 
 //        bookRepository.save(book); //Não precisa disso pq tem o transational
     }
@@ -64,7 +64,7 @@ public class TransactionService {
         book.setPrice(BigDecimal.valueOf(100));
         book.setGenre(BookGenre.FICTION);
         book.setTitle("Livro da Francisca");
-        book.setPublicationDate(LocalDate.of(1980, 01, 2));
+        book.setPublishDate(LocalDate.of(1980, 01, 2));
 
         book.setAuthor(author);
 
