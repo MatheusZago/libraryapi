@@ -34,7 +34,7 @@ public class ClientController {
     })
     //*TODO created DTO and Mapper
     public void save(@RequestBody Client client){
-        log.info("Registering new client: {} with scope: ", client.getClientId(), client.getScope());
+        log.info("Registering new client: {} with scope: {}", client.getClientId(), client.getScope());
         service.save(client);
     }
 }
