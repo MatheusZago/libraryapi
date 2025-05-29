@@ -27,8 +27,7 @@ logging:
   level:
     root: warn
     com:
-      matheusluizago:
-        controller: error
+      matheusluizago: trace
     org:
       springframework:
         web: debug
