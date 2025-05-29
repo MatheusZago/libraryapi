@@ -1,39 +1,32 @@
 package com.matheusluizago.libraryapi.model;
 
-import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "users")
-public class User {
+@Table(name = "clients")
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column
-    private String login;
+    @Column(name = "client_id")
+    private String clientId;
 
-    @Column
-    private String password;
+    @Column(name = "client_secret")
+    private String clientSecret;
 
-    @Column
-    @Email
-    private String email;
+    @Column(name = "redirect_uri")
+    private String redirectURI;
 
-    @Type(ListArrayType.class) //Using hypersistance library to translante list to array in db
-    @Column(name = "roles", columnDefinition = "varchar[]")
-    private List<String> roles;
+    private String scope;
 
     @CreatedDate
     @Column(name = "date_register")
@@ -51,36 +44,36 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getClientSecret() {
+        return clientSecret;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getRedirectURI() {
+        return redirectURI;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setRedirectURI(String redirectURI) {
+        this.redirectURI = redirectURI;
     }
 
-    public String getEmail() {
-        return email;
+    public String getScope() {
+        return scope;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public LocalDateTime getDateRegister() {

@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,8 +32,8 @@ public class BookService {
 
     public Book save(Book book) {
          validator.validate(book);
-         User user = securityService.getLoggedUser();
-         book.setUser(user);
+         Optional<User> user = securityService.getLoggedUser();
+         book.setUser(user.orElse(null));
          return repository.save(book);
     }
 

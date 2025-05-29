@@ -1,5 +1,6 @@
 package com.matheusluizago.libraryapi.config;
 
+import com.matheusluizago.libraryapi.security.JwtCustomAuthenticationFilter;
 import com.matheusluizago.libraryapi.security.SocialLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -20,7 +22,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilter(HttpSecurity http, SocialLoginSuccessHandler successHandler) throws Exception {
+    public SecurityFilterChain securityFilter(HttpSecurity http,
+                                              SocialLoginSuccessHandler successHandler,
+                                              JwtCustomAuthenticationFilter jwtCustomAuthenticationFilter) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable) //Garantees that the right page is the one sending the request, in this case is off
                 .formLogin(configurer -> {
@@ -37,12 +41,9 @@ public class SecurityConfiguration {
                             .loginPage("/login") //making google use the login page
                             .successHandler(successHandler);
                 })
+                .oauth2ResourceServer(oauth2Rs -> oauth2Rs.jwt(Customizer.withDefaults()))
+                .addFilterAfter(jwtCustomAuthenticationFilter, BearerTokenAuthenticationFilter.class)
                 .build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(10);
     }
 
     @Bean //Using this we can take out the 'ROLE_" prefix from the app or change the prefix
@@ -50,28 +51,16 @@ public class SecurityConfiguration {
         return new GrantedAuthorityDefaults("");
     }
 
+    @Bean //Configure prefyx in token
+    //Cusotmizes the token
+    public JwtAuthenticationConverter jwtAuthenticationConverter(){
+        var authoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        authoritiesConverter.setAuthorityPrefix("");
 
-    //Disabled this one because now we are using the CustomAuthenticationProvider to provide the auth of the app.
-//    @Bean
-//    public UserDetailsService userDetailsService(UserService userService) {
-//
-//        return new CustomUserDetailsService(userService);
+        var converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
 
-        //Creating in memory, above is the right way
+        return converter;
+    }
 
-//        UserDetails user1 = User.builder()
-//                .username("user")
-//                .password(encoder.encode("123"))
-//                .roles("USER")
-//                .build();
-//
-//        UserDetails user2 = User.builder()
-//                .username("admin")
-//                .password(encoder.encode("321"))
-//                .roles("ADMIN")
-//                .build();
-
-        //It is something that the class impelements
-//        return new InMemoryUserDetailsManager(user1, user2);
-//    }
 }

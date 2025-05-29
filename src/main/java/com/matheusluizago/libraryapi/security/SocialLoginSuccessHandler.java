@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SocialLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
@@ -42,7 +43,7 @@ public class SocialLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
             user = registerUserWithGoogle(email);
         }
 
-        authentication = new CustomAuthentication(user);
+        authentication = new CustomAuthentication(Optional.of(user));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
