@@ -100,7 +100,7 @@ public class AuthorController implements GenericController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER', 'CLIENT')")
     @Operation(summary = "Search", description = "Search an author by filter.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Returning authors.")
