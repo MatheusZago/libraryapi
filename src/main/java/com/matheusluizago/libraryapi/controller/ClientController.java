@@ -1,5 +1,7 @@
 package com.matheusluizago.libraryapi.controller;
 
+import com.matheusluizago.libraryapi.controller.dto.ClientDTO;
+import com.matheusluizago.libraryapi.controller.mappers.ClientMapper;
 import com.matheusluizago.libraryapi.model.Client;
 import com.matheusluizago.libraryapi.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 public class ClientController {
 
     private final ClientService service;
+    private final ClientMapper mapper;
 
-    public ClientController(ClientService service) {
+    public ClientController(ClientService service, ClientMapper mapper) {
         this.service = service;
+        this.mapper = mapper;;
     }
 
     @PostMapping
@@ -32,8 +36,9 @@ public class ClientController {
             @ApiResponse(responseCode = "422", description = "Validation error."),
             @ApiResponse(responseCode = "409", description = "Client already registered.")
     })
-    //*TODO created DTO and Mapper
-    public void save(@RequestBody Client client){
+
+    public void save(@RequestBody ClientDTO dto){
+        var client = mapper.toEntity(dto);
         log.info("Registering new client: {} with scope: {}", client.getClientId(), client.getScope());
         service.save(client);
     }

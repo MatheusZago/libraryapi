@@ -80,7 +80,7 @@ public class BookController implements GenericController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('OPERATOR', 'MANAGER', 'CLIENT')")
     @GetMapping
     @Operation(summary = "Search", description = "Search an book by filter.")
     @ApiResponses({
