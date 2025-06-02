@@ -21,18 +21,19 @@ public class UserService {
         this.validator = validator;
     }
 
-    public void save(User user){
+    public User save(User user){
         validator.validate(user);
         var password = user.getPassword();
         user.setPassword(encoder.encode(password));
         repository.save(user);
+        return user;
     }
 
     public Optional<User> getByLogin(String login){
         return repository.findByLogin(login);
     }
 
-    public User getByEmail(String email){
+    public Optional<User> getByEmail(String email){
         return repository.findByEmail(email);
     }
 }

@@ -49,7 +49,6 @@ public class ClientServiceTest {
     public void getById_WhenClientExists_ShouldReturnClient() {
         UUID clientId = ClientConstants.CLIENT_ID;
         Client client = ClientConstants.VALID_CLIENT;
-//        client.setClientId(clientId.toString());
 
         when(repository.findByClientId(clientId.toString())).thenReturn(Optional.of(client));
 
