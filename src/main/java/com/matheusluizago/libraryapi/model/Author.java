@@ -47,6 +47,13 @@ public class Author {
     public Author() {
     }
 
+    public Author(UUID id, String name, LocalDate birthdate, String nationality) {
+        this.id = id;
+        this.name = name;
+        this.birthdate = birthdate;
+        this.nationality = nationality;
+    }
+
     public UUID getId() {
         return id;
     }
