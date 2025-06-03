@@ -17,4 +17,11 @@ public class AuthorDTOConstants {
             "British"
     );
 
+    public static final AuthorDTO INVALID_AUTHOR = new AuthorDTO(
+            ID_AUTHOR,
+            "",
+            LocalDate.of(3022, 1, 3),
+            ""
+    );
+
 }

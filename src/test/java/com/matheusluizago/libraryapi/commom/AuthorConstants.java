@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class AuthorConstants {
 
-    public static final UUID AUTHOR_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public static final UUID AUTHOR_ID = UUID.fromString("00000000-0000-0000-0000-000000000001");
 
     public static final Author VALID_AUTHOR = new Author(
             AUTHOR_ID,
