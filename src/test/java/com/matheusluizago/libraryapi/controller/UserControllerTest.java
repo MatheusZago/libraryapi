@@ -1,13 +1,12 @@
 package com.matheusluizago.libraryapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matheusluizago.libraryapi.commom.ClientConstants;
-import com.matheusluizago.libraryapi.commom.ClientDTOConstants;
-import com.matheusluizago.libraryapi.controller.dto.ClientDTO;
-import com.matheusluizago.libraryapi.controller.mappers.ClientMapper;
+import com.matheusluizago.libraryapi.commom.UserConstant;
+import com.matheusluizago.libraryapi.commom.UserDtoConstants;
+import com.matheusluizago.libraryapi.controller.dto.UserDTO;
+import com.matheusluizago.libraryapi.controller.mappers.UserMapper;
 import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
-import com.matheusluizago.libraryapi.model.Client;
-import com.matheusluizago.libraryapi.service.ClientService;
+import com.matheusluizago.libraryapi.model.User;
 import com.matheusluizago.libraryapi.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,71 +25,66 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
-@WebMvcTest(ClientController.class)
+@WebMvcTest(UserController.class)
 @AutoConfigureDataJpa
-public class ClientControllerTest {
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ClientService service;
+    private UserService service;
 
     @MockBean
-    private ClientMapper mapper;
-
-    @MockBean
-    private UserService userService;
-
+    private UserMapper mapper;
     @MockBean
     private SecurityFilterChain filterChain;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Client client;
-    private ClientDTO clientDTO;
-    private ClientDTO invalidClientDTO;
+    private User user;
+    private UserDTO userDTO;
+    private UserDTO invalidUserDTO;
 
     @BeforeEach
     public void setUp(){
-        client = ClientConstants.VALID_CLIENT;
-        clientDTO = ClientDTOConstants.VALID_CLIENT_DTO;
-        invalidClientDTO = ClientDTOConstants.INVALID_CLIENT_DTO;
+        user = UserConstant.VALID_USER;
+        userDTO = UserDtoConstants.VALID_USER_DTO;
+        invalidUserDTO = UserDtoConstants.INVALID_USER_DTO;
     }
 
     @Test
     void save_ValidClientDTO_ReturnsCreated() throws Exception {
-        Mockito.when(mapper.toEntity(clientDTO)).thenReturn(client);
-        Mockito.when(service.save(client)).thenReturn(client);
+        Mockito.when(mapper.toEntity(userDTO)).thenReturn(user);
+        Mockito.when(service.save(user)).thenReturn(user);
 
 
-        mockMvc.perform(post("/clients")
+        mockMvc.perform(post("/users")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(clientDTO)))
+                        .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isCreated());
     }
 
     @Test
     void save_DuplicateClient_Returns409() throws Exception {
-        Mockito.when(mapper.toEntity(clientDTO)).thenReturn(client);
-        Mockito.when(service.save(client)).thenThrow(new DuplicateRegisterException("Client already registered"));
+        Mockito.when(mapper.toEntity(userDTO)).thenReturn(user);
+        Mockito.when(service.save(user)).thenThrow(new DuplicateRegisterException("User already registered"));
 
-        mockMvc.perform(post("/clients")
+        mockMvc.perform(post("/users")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(clientDTO)))
+                        .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isConflict());
     }
 
     @Test
     void save_InvalidClientDTO_Returns422() throws Exception {
-        mockMvc.perform(post("/clients")
+        mockMvc.perform(post("/users")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalidClientDTO)))
+                        .content(objectMapper.writeValueAsString(invalidUserDTO)))
                 .andExpect(status().isUnprocessableEntity());
     }
-
 }
