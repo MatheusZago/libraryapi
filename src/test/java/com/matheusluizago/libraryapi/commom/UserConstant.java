@@ -15,7 +15,7 @@ public class UserConstant {
         VALID_USER = new User();
         VALID_USER.setId(USER_ID);
         VALID_USER.setLogin("testuser");
-        VALID_USER.setPassword("password123"); // pode ser criptografada se necessário
+        VALID_USER.setPassword("password123");
         VALID_USER.setEmail("testuser@example.com");
         VALID_USER.setRoles(List.of("ROLE_USER"));
     }
