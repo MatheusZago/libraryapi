@@ -9,6 +9,7 @@ import com.matheusluizago.libraryapi.exceptions.DuplicateRegisterException;
 import com.matheusluizago.libraryapi.model.Author;
 import com.matheusluizago.libraryapi.service.AuthorService;
 import com.matheusluizago.libraryapi.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +54,21 @@ public class AuthorControllerTest {
     @MockBean
     private SecurityFilterChain filterChain;
 
+    private UUID idAuthor;
+    private AuthorDTO authorDTO;
+    private Author author;
+    private AuthorDTO invalidAuthorDTO;
+
+    @BeforeEach
+    public void setUp(){
+        idAuthor = AuthorDTOConstants.ID_AUTHOR;
+         authorDTO = AuthorDTOConstants.VALID_AUTHOR;
+         author = AuthorConstants.VALID_AUTHOR;
+         invalidAuthorDTO = AuthorDTOConstants.INVALID_AUTHOR;
+    }
+
     @Test
     public void saveAuthor_WithValidData_Return201() throws Exception {
-        UUID id = AuthorDTOConstants.ID_AUTHOR;
-        AuthorDTO authorDTO = AuthorDTOConstants.VALID_AUTHOR;
-        Author author = AuthorConstants.VALID_AUTHOR;
-
         Mockito.when(mapper.toEntity(authorDTO)).thenReturn(author);
 
         Mockito.when(service.save(author)).thenReturn(author);
@@ -68,14 +78,12 @@ public class AuthorControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authorDTO)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", "http://localhost/authors/" + id));
+                .andExpect(header().string("Location", "http://localhost/authors/" + idAuthor));
 
     }
 
     @Test
     public void saveAuthor_WithInvalidEmail_Return422() throws Exception {
-        AuthorDTO invalidAuthorDTO = AuthorDTOConstants.INVALID_AUTHOR;
-
         mockMvc.perform(post("/authors")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -86,9 +94,6 @@ public class AuthorControllerTest {
 
     @Test
     public void saveAuthor_AlreadyRegistered_Return409() throws Exception {
-        AuthorDTO authorDTO = AuthorDTOConstants.VALID_AUTHOR;
-        Author author = AuthorConstants.VALID_AUTHOR;
-
         Mockito.when(mapper.toEntity(authorDTO)).thenReturn(author);
 
         Mockito.when(service.save(author)).thenThrow(new DuplicateRegisterException("Author already registered"));
@@ -103,10 +108,6 @@ public class AuthorControllerTest {
 
     @Test
     public void getDetails_WithValidRole_Returns200() throws Exception {
-        Author author = AuthorConstants.VALID_AUTHOR;
-        AuthorDTO authorDTO = AuthorDTOConstants.VALID_AUTHOR;
-        UUID idAuthor = AuthorDTOConstants.ID_AUTHOR;
-
         Mockito.when(service.getById(idAuthor)).thenReturn(Optional.of(author));
         Mockito.when(mapper.toDTO(author)).thenReturn(authorDTO);
 
@@ -119,8 +120,6 @@ public class AuthorControllerTest {
     @Test
     @WithMockUser(roles = {"MANAGER"})
     public void getDetails_AuthorNotFound_Returns404() throws Exception {
-        UUID idAuthor = AuthorDTOConstants.ID_AUTHOR;
-
         Mockito.when(service.getById(idAuthor)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/authors/" + idAuthor))
@@ -142,11 +141,9 @@ public class AuthorControllerTest {
 
     @Test
     public void delete_WithManagerRole_NonExistingAuthor_Returns404() throws Exception {
-        UUID id = UUID.randomUUID();
+        Mockito.when(service.getById(idAuthor)).thenReturn(Optional.empty());
 
-        Mockito.when(service.getById(id)).thenReturn(Optional.empty());
-
-        mockMvc.perform(delete("/authors/" + id))
+        mockMvc.perform(delete("/authors/" + idAuthor))
                 .andExpect(status().isNotFound());
 
         Mockito.verify(service, Mockito.never()).delete(Mockito.any());
@@ -154,14 +151,11 @@ public class AuthorControllerTest {
 
     @Test
     public void delete_WithManagerRole_AuthorWithBook_Returns400() throws Exception {
-        UUID id = AuthorConstants.VALID_AUTHOR.getId();
-        Author author = AuthorConstants.VALID_AUTHOR;
-
-        Mockito.when(service.getById(id)).thenReturn(Optional.of(author));
+        Mockito.when(service.getById(idAuthor)).thenReturn(Optional.of(author));
         Mockito.doThrow(new IllegalStateException("Author has books"))
                 .when(service).delete(author);
 
-        mockMvc.perform(delete("/authors/" + id))
+        mockMvc.perform(delete("/authors/" + idAuthor))
                 .andExpect(status().isBadRequest());
     }
 
@@ -196,14 +190,13 @@ public class AuthorControllerTest {
 
     @Test
     public void update_WithValidData_Returns204() throws Exception {
-        UUID id = AuthorDTOConstants.ID_AUTHOR;
         Author existingAuthor = AuthorConstants.VALID_AUTHOR;
         AuthorDTO updatedDTO = new AuthorDTO(UUID.randomUUID(), "J.R.R. Tolkien",  LocalDate.of(1892, 1, 3), "British");
 
 
-        Mockito.when(service.getById(id)).thenReturn(Optional.of(existingAuthor));
+        Mockito.when(service.getById(idAuthor)).thenReturn(Optional.of(existingAuthor));
 
-        mockMvc.perform(put("/authors/" + id)
+        mockMvc.perform(put("/authors/" + idAuthor)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedDTO)))
                 .andExpect(status().isNoContent());
@@ -215,14 +208,12 @@ public class AuthorControllerTest {
 
     @Test
     public void update_WithInvalidDTO_Returns422() throws Exception {
-        UUID id = AuthorDTOConstants.ID_AUTHOR;
-
         Author existingAuthor = AuthorConstants.VALID_AUTHOR;
-        Mockito.when(service.getById(id)).thenReturn(Optional.of(existingAuthor));
+        Mockito.when(service.getById(idAuthor)).thenReturn(Optional.of(existingAuthor));
 
         AuthorDTO invalidDTO = new AuthorDTO(UUID.randomUUID(), "", LocalDate.of(1892, 1, 3), "British");
 
-        mockMvc.perform(put("/authors/" + id)
+        mockMvc.perform(put("/authors/" + idAuthor)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidDTO)))
                 .andExpect(status().isUnprocessableEntity());

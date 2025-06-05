@@ -11,6 +11,7 @@ import com.matheusluizago.libraryapi.model.Book;
 import com.matheusluizago.libraryapi.model.BookGenre;
 import com.matheusluizago.libraryapi.service.BookService;
 import com.matheusluizago.libraryapi.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,19 +56,31 @@ public class BookControllerTest {
     @MockBean
     private SecurityFilterChain filterChain;
 
+    private UUID id;
+    private RegisterBookDTO registerDTO;
+    private Book book;
+    private ResultSearchBookDTO resultDTO;
+    private RegisterBookDTO invalidDTO;
+
+    @BeforeEach
+    void setup(){
+        id = BookDTOConstants.VALID_BOOK_DTO.authorId();
+        registerDTO = BookDTOConstants.VALID_BOOK_DTO;
+        book = BookConstants.VALID_BOOK;
+        resultDTO = BookDTOConstants.VALID_BOOK_SEARCH_DTO;
+        invalidDTO = BookDTOConstants.INVALID_BOOK_DTO;
+    }
+
     @Test
     public void saveBook_WithValidData_Returns201() throws Exception {
-        UUID id = BookDTOConstants.VALID_BOOK_DTO.authorId();
-        RegisterBookDTO dto = BookDTOConstants.VALID_BOOK_DTO;
-        Book book = BookConstants.VALID_BOOK;
 
-        Mockito.when(mapper.toEntity(dto)).thenReturn(book);
+        Mockito.when(mapper.toEntity(registerDTO)).thenReturn(book);
         Mockito.when(service.save(book)).thenReturn(book);
 
         mockMvc.perform(post("/books")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(registerDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "http://localhost/books/" + book.getId()));
     }
@@ -85,40 +98,31 @@ public class BookControllerTest {
 
     @Test
     public void saveBook_AlreadyExists_Returns409() throws Exception {
-        RegisterBookDTO dto = BookDTOConstants.VALID_BOOK_DTO;
-        Book book = BookConstants.VALID_BOOK;
-
-        Mockito.when(mapper.toEntity(dto)).thenReturn(book);
+        Mockito.when(mapper.toEntity(registerDTO)).thenReturn(book);
         Mockito.when(service.save(book)).thenThrow(new DuplicateRegisterException("Book already exists"));
 
         mockMvc.perform(post("/books")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(registerDTO)))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("Book already exists"));
     }
 
     @Test
     public void getDetails_WithValidId_Returns200() throws Exception {
-        UUID id = BookConstants.VALID_BOOK.getId();
-        Book book = BookConstants.VALID_BOOK;
-        ResultSearchBookDTO dto = BookDTOConstants.VALID_BOOK_SEARCH_DTO;
-
         Mockito.when(service.getById(id)).thenReturn(Optional.of(book));
-        Mockito.when(mapper.toDTO(book)).thenReturn(dto);
+        Mockito.when(mapper.toDTO(book)).thenReturn(resultDTO);
 
         mockMvc.perform(get("/books/" + id))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(dto.title()))
-                .andExpect(jsonPath("$.isbn").value(dto.isbn()))
-                .andExpect(jsonPath("$.author.name").value(dto.author().name()));
+                .andExpect(jsonPath("$.title").value(resultDTO.title()))
+                .andExpect(jsonPath("$.isbn").value(resultDTO.isbn()))
+                .andExpect(jsonPath("$.author.name").value(resultDTO.author().name()));
     }
 
     @Test
     public void getDetails_BookNotFound_Returns404() throws Exception {
-        UUID id = UUID.randomUUID();
-
         Mockito.when(service.getById(id)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/books/" + id))
@@ -127,9 +131,6 @@ public class BookControllerTest {
 
     @Test
     public void deleteBook_WithValidId_Returns204() throws Exception {
-        UUID id = BookConstants.VALID_BOOK.getId();
-        Book book = BookConstants.VALID_BOOK;
-
         Mockito.when(service.getById(id)).thenReturn(Optional.of(book));
         Mockito.doNothing().when(service).delete(book);
 
@@ -140,8 +141,6 @@ public class BookControllerTest {
 
     @Test
     public void deleteBook_NotFound_Returns404() throws Exception {
-        UUID id = UUID.randomUUID();
-
         Mockito.when(service.getById(id)).thenReturn(Optional.empty());
 
         mockMvc.perform(delete("/books/" + id)
@@ -172,14 +171,11 @@ public class BookControllerTest {
 
     @Test
     public void searchBooks_WithFilters_Returns200WithResults() throws Exception {
-        Book book = BookConstants.VALID_BOOK;
-        ResultSearchBookDTO dto = BookDTOConstants.VALID_BOOK_SEARCH_DTO;
-
         Page<Book> bookPage = new PageImpl<>(List.of(book));
         Mockito.when(service.searchByFilter("9783161484100", "Test Book", "Author Name", BookGenre.FANTASY, 2024, 0, 10))
                 .thenReturn(bookPage);
 
-        Mockito.when(mapper.toDTO(book)).thenReturn(dto);
+        Mockito.when(mapper.toDTO(book)).thenReturn(resultDTO);
 
         mockMvc.perform(get("/books")
                         .param("isbn", "9783161484100")
@@ -192,48 +188,40 @@ public class BookControllerTest {
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content[0].id").value(dto.id().toString()))
-                .andExpect(jsonPath("$.content[0].title").value(dto.title()));
+                .andExpect(jsonPath("$.content[0].id").value(resultDTO.id().toString()))
+                .andExpect(jsonPath("$.content[0].title").value(resultDTO.title()));
     }
 
     @Test
     public void updateBook_WithValidData_Returns204() throws Exception {
-        UUID id = BookConstants.VALID_BOOK.getId();
-        RegisterBookDTO dto = BookDTOConstants.VALID_BOOK_DTO;
         Book existingBook = BookConstants.VALID_BOOK;
         Book mappedBook = BookConstants.VALID_BOOK;
 
         Mockito.when(service.getById(id)).thenReturn(Optional.of(existingBook));
-        Mockito.when(mapper.toEntity(dto)).thenReturn(mappedBook);
+        Mockito.when(mapper.toEntity(registerDTO)).thenReturn(mappedBook);
         Mockito.doNothing().when(service).update(Mockito.any(Book.class));
 
         mockMvc.perform(put("/books/" + id)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(registerDTO)))
                 .andExpect(status().isNoContent());
     }
 
 
     @Test
     public void updateBook_BookNotFound_Returns404() throws Exception {
-        UUID id = UUID.randomUUID();
-        RegisterBookDTO dto = BookDTOConstants.VALID_BOOK_DTO;
-
         Mockito.when(service.getById(id)).thenReturn(Optional.empty());
 
         mockMvc.perform(put("/books/" + id)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(registerDTO)))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void updateBook_WithInvalidData_Returns422() throws Exception {
-        UUID id = BookConstants.VALID_BOOK.getId();
-        RegisterBookDTO invalidDTO = BookDTOConstants.INVALID_BOOK_DTO;
-
         mockMvc.perform(put("/books/" + id)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
