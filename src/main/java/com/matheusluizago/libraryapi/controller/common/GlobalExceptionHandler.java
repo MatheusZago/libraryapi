@@ -72,6 +72,12 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Void> handleIllegalState(IllegalStateException ex) {
+        return ResponseEntity.badRequest().build();
+    }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleUnhandledError(RuntimeException e){
@@ -79,5 +85,7 @@ public class GlobalExceptionHandler {
 
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Unexpected Error, contact administration.", List.of());
     }
+
+
 
 }
