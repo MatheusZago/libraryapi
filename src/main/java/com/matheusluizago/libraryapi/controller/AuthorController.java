@@ -68,7 +68,6 @@ public class AuthorController implements GenericController {
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
 
-        //Usando mapper
         return service.getById(idAuthor).map(author -> {
             AuthorDTO dto = mapper.toDTO(author);
             return ResponseEntity.ok(dto);
@@ -129,7 +128,7 @@ public class AuthorController implements GenericController {
             @ApiResponse(responseCode = "204", description = "Updated with succes."),
             @ApiResponse(responseCode = "404", description = "Author not found.")
     })
-    public ResponseEntity<Void> update(@PathVariable("id") String id, @RequestBody AuthorDTO dto) {
+    public ResponseEntity<Void> update(@PathVariable("id") String id, @RequestBody @Valid AuthorDTO dto) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> authorOptional = service.getById(idAuthor);
 
