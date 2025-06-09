@@ -476,3 +476,259 @@ org.springframework.security.access.AccessDeniedException: Access Denied
 2025-06-05T12:34:47.875-03:00 DEBUG 23320 --- [libraryapi] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [Page 1 of 1 containing com.matheusluizago.libraryapi.controller.dto.ResultSearchBookDTO instances]
 2025-06-05T12:34:47.893-03:00 TRACE 23320 --- [libraryapi] [http-nio-8080-exec-6] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
 2025-06-05T12:34:47.894-03:00 DEBUG 23320 --- [libraryapi] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-06-09T12:54:18.934-03:00  INFO 22584 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Starting Application using Java 21.0.4 with PID 22584 (C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes started by USER in C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\src\main\java\com\matheusluizago\libraryapi)
+2025-06-09T12:54:18.936-03:00 DEBUG 22584 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Running with Spring Boot v3.3.4, Spring v6.1.13
+2025-06-09T12:54:18.936-03:00  INFO 22584 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : No active profile set, falling back to 1 default profile: "default"
+2025-06-09T12:54:26.534-03:00  WARN 22584 --- [libraryapi] [main] com.zaxxer.hikari.HikariConfig           : library-db-pool - idleTimeout is close to or more than maxLifetime, disabling it.
+2025-06-09T12:54:27.761-03:00 ERROR 22584 --- [libraryapi] [main] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtCustomAuthenticationFilter' defined in file [C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes\com\matheusluizago\libraryapi\security\JwtCustomAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userService' defined in file [C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes\com\matheusluizago\libraryapi\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in com.matheusluizago.libraryapi.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-06-09T12:54:27.798-03:00  WARN 22584 --- [libraryapi] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-06-09T12:54:27.862-03:00 ERROR 22584 --- [libraryapi] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:165) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:619) ~[spring-context-6.1.13.jar:6.1.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.4.jar:3.3.4]
+	at com.matheusluizago.libraryapi.Application.main(Application.java:12) ~[classes/:na]
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:147) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:516) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[spring-boot-3.3.4.jar:3.3.4]
+	... 8 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtCustomAuthenticationFilter' defined in file [C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes\com\matheusluizago\libraryapi\security\JwtCustomAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userService' defined in file [C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes\com\matheusluizago\libraryapi\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in com.matheusluizago.libraryapi.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:266) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:240) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.3.4.jar:3.3.4]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4412) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:870) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437) ~[tomcat-embed-core-10.1.30.jar:10.1.30]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128) ~[spring-boot-3.3.4.jar:3.3.4]
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes\com\matheusluizago\libraryapi\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in com.matheusluizago.libraryapi.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 54 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userRepository' defined in com.matheusluizago.libraryapi.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1705) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1454) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 68 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:682) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 82 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'hikariDataSource' defined in class path resource [com/matheusluizago/libraryapi/config/DatabaseConfiguration.class]: Failed to instantiate [javax.sql.DataSource]: Factory method 'hikariDataSource' threw exception with message: Failed to initialize pool: FATAL: banco de dados "library" n�o existe
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 94 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'hikariDataSource' defined in class path resource [com/matheusluizago/libraryapi/config/DatabaseConfiguration.class]: Failed to instantiate [javax.sql.DataSource]: Factory method 'hikariDataSource' threw exception with message: Failed to initialize pool: FATAL: banco de dados "library" n�o existe
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 106 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'hikariDataSource' threw exception with message: Failed to initialize pool: FATAL: banco de dados "library" n�o existe
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:178) ~[spring-beans-6.1.13.jar:6.1.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 120 common frames omitted
+Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: FATAL: banco de dados "library" n�o existe
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:na]
+	at com.matheusluizago.libraryapi.config.DatabaseConfiguration.hikariDataSource(DatabaseConfiguration.java:37) ~[classes/:na]
+	at com.matheusluizago.libraryapi.config.DatabaseConfiguration$$SpringCGLIB$$0.CGLIB$hikariDataSource$0(<generated>) ~[classes/:na]
+	at com.matheusluizago.libraryapi.config.DatabaseConfiguration$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.1.13.jar:6.1.13]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:348) ~[spring-context-6.1.13.jar:6.1.13]
+	at com.matheusluizago.libraryapi.config.DatabaseConfiguration$$SpringCGLIB$$0.hikariDataSource(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.13.jar:6.1.13]
+	... 121 common frames omitted
+Caused by: org.postgresql.util.PSQLException: FATAL: banco de dados "library" n�o existe
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2837) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:175) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:317) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.Driver.makeConnection(Driver.java:446) ~[postgresql-42.7.3.jar:42.7.3]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.3.jar:42.7.3]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:na]
+	... 132 common frames omitted
+
+2025-06-09T12:57:26.360-03:00  INFO 17908 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Starting Application using Java 21.0.4 with PID 17908 (C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes started by USER in C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\src\main\java\com\matheusluizago\libraryapi)
+2025-06-09T12:57:26.362-03:00 DEBUG 17908 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Running with Spring Boot v3.3.4, Spring v6.1.13
+2025-06-09T12:57:26.363-03:00  INFO 17908 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : No active profile set, falling back to 1 default profile: "default"
+2025-06-09T12:57:28.579-03:00  WARN 17908 --- [libraryapi] [main] com.zaxxer.hikari.HikariConfig           : library-db-pool - idleTimeout is close to or more than maxLifetime, disabling it.
+2025-06-09T12:57:30.659-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2025-06-09T12:57:30.661-03:00 DEBUG 17908 --- [libraryapi] [main] c.m.l.s.JwtCustomAuthenticationFilter    : Filter 'jwtCustomAuthenticationFilter' configured for use
+2025-06-09T12:57:31.485-03:00  WARN 17908 --- [libraryapi] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-09T12:57:31.504-03:00 TRACE 17908 --- [libraryapi] [main] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {authorizationServerConfiguration=com.matheusluizago.libraryapi.config.AuthorizationServerConfiguration$$SpringCGLIB$$0@4587675c, securityConfiguration=com.matheusluizago.libraryapi.config.SecurityConfiguration$$SpringCGLIB$$0@6f65b61d}
+2025-06-09T12:57:31.506-03:00  INFO 17908 --- [libraryapi] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name customAuthenticationProvider
+2025-06-09T12:57:31.667-03:00 DEBUG 17908 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 21 mappings in 'requestMappingHandlerMapping'
+2025-06-09T12:57:31.686-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/login] in 'viewControllerHandlerMapping'
+2025-06-09T12:57:31.716-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-06-09T12:57:32.385-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer$$Lambda/0x00000278d4b12ad0@1a5d08c5 with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, AuthorizationServerContextFilter, HeaderWriterFilter, CsrfFilter, OidcLogoutEndpointFilter, LogoutFilter, OAuth2AuthorizationServerMetadataEndpointFilter, OAuth2AuthorizationEndpointFilter, OAuth2DeviceVerificationEndpointFilter, OidcProviderConfigurationEndpointFilter, NimbusJwkSetEndpointFilter, OAuth2ClientAuthenticationFilter, UsernamePasswordAuthenticationFilter, BearerTokenAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter, OAuth2TokenEndpointFilter, OAuth2TokenIntrospectionEndpointFilter, OAuth2TokenRevocationEndpointFilter, OAuth2DeviceAuthorizationEndpointFilter, OidcUserInfoEndpointFilter
+2025-06-09T12:57:32.433-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, OAuth2AuthorizationRequestRedirectFilter, OAuth2LoginAuthenticationFilter, UsernamePasswordAuthenticationFilter, BearerTokenAuthenticationFilter, JwtCustomAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-06-09T12:57:32.441-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/v2/api-docs/**'], Ant [pattern='/v2/api-docs/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.441-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/v2/api-docs/**'], Ant [pattern='/v2/api-docs/**']]
+2025-06-09T12:57:32.442-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/v3/api-docs/**'], Ant [pattern='/v3/api-docs/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.442-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/v3/api-docs/**'], Ant [pattern='/v3/api-docs/**']]
+2025-06-09T12:57:32.442-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/swagger-resources/**'], Ant [pattern='/swagger-resources/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.442-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/swagger-resources/**'], Ant [pattern='/swagger-resources/**']]
+2025-06-09T12:57:32.442-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/swagger-ui.html'], Ant [pattern='/swagger-ui.html']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.442-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/swagger-ui.html'], Ant [pattern='/swagger-ui.html']]
+2025-06-09T12:57:32.442-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/swagger-ui/**'], Ant [pattern='/swagger-ui/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.442-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/swagger-ui/**'], Ant [pattern='/swagger-ui/**']]
+2025-06-09T12:57:32.442-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/webjars/**'], Ant [pattern='/webjars/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.442-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/webjars/**'], Ant [pattern='/webjars/**']]
+2025-06-09T12:57:32.442-03:00  WARN 17908 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/actuator/**'], Ant [pattern='/actuator/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T12:57:32.442-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/actuator/**'], Ant [pattern='/actuator/**']]
+2025-06-09T12:57:32.509-03:00 DEBUG 17908 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-09T12:57:32.544-03:00 DEBUG 17908 --- [libraryapi] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-06-09T12:57:33.162-03:00 DEBUG 17908 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 1 mappings in 'requestMappingHandlerMapping'
+2025-06-09T12:57:33.164-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/login] in 'viewControllerHandlerMapping'
+2025-06-09T12:57:33.172-03:00 DEBUG 17908 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-06-09T12:57:33.180-03:00 DEBUG 17908 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-09T12:57:33.205-03:00  INFO 17908 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Started Application in 7.261 seconds (process running for 7.627)
+2025-06-09T13:20:16.466-03:00  INFO 9868 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Starting Application using Java 21.0.4 with PID 9868 (C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\target\classes started by USER in C:\Users\USER\Documents\Cursos\Spring Boot Expert\libraryapi\src\main\java\com\matheusluizago\libraryapi)
+2025-06-09T13:20:16.467-03:00 DEBUG 9868 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Running with Spring Boot v3.3.4, Spring v6.1.13
+2025-06-09T13:20:16.468-03:00  INFO 9868 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : The following 1 profile is active: "test"
+2025-06-09T13:20:18.657-03:00  WARN 9868 --- [libraryapi] [main] com.zaxxer.hikari.HikariConfig           : library-db-pool - idleTimeout is close to or more than maxLifetime, disabling it.
+2025-06-09T13:20:20.482-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2025-06-09T13:20:20.483-03:00 DEBUG 9868 --- [libraryapi] [main] c.m.l.s.JwtCustomAuthenticationFilter    : Filter 'jwtCustomAuthenticationFilter' configured for use
+2025-06-09T13:20:21.205-03:00  WARN 9868 --- [libraryapi] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-09T13:20:21.223-03:00 TRACE 9868 --- [libraryapi] [main] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {authorizationServerConfiguration=com.matheusluizago.libraryapi.config.AuthorizationServerConfiguration$$SpringCGLIB$$0@12d24c43, securityConfiguration=com.matheusluizago.libraryapi.config.SecurityConfiguration$$SpringCGLIB$$0@1c74251b}
+2025-06-09T13:20:21.224-03:00  INFO 9868 --- [libraryapi] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name customAuthenticationProvider
+2025-06-09T13:20:21.376-03:00 DEBUG 9868 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 21 mappings in 'requestMappingHandlerMapping'
+2025-06-09T13:20:21.393-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/login] in 'viewControllerHandlerMapping'
+2025-06-09T13:20:21.416-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-06-09T13:20:22.013-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer$$Lambda/0x0000014bd9b119b0@6a72d301 with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, AuthorizationServerContextFilter, HeaderWriterFilter, CsrfFilter, OidcLogoutEndpointFilter, LogoutFilter, OAuth2AuthorizationServerMetadataEndpointFilter, OAuth2AuthorizationEndpointFilter, OAuth2DeviceVerificationEndpointFilter, OidcProviderConfigurationEndpointFilter, NimbusJwkSetEndpointFilter, OAuth2ClientAuthenticationFilter, UsernamePasswordAuthenticationFilter, BearerTokenAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter, OAuth2TokenEndpointFilter, OAuth2TokenIntrospectionEndpointFilter, OAuth2TokenRevocationEndpointFilter, OAuth2DeviceAuthorizationEndpointFilter, OidcUserInfoEndpointFilter
+2025-06-09T13:20:22.054-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, OAuth2AuthorizationRequestRedirectFilter, OAuth2LoginAuthenticationFilter, UsernamePasswordAuthenticationFilter, BearerTokenAuthenticationFilter, JwtCustomAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-06-09T13:20:22.061-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/v2/api-docs/**'], Ant [pattern='/v2/api-docs/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.062-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/v2/api-docs/**'], Ant [pattern='/v2/api-docs/**']]
+2025-06-09T13:20:22.062-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/v3/api-docs/**'], Ant [pattern='/v3/api-docs/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.062-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/v3/api-docs/**'], Ant [pattern='/v3/api-docs/**']]
+2025-06-09T13:20:22.062-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/swagger-resources/**'], Ant [pattern='/swagger-resources/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.062-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/swagger-resources/**'], Ant [pattern='/swagger-resources/**']]
+2025-06-09T13:20:22.062-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/swagger-ui.html'], Ant [pattern='/swagger-ui.html']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.062-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/swagger-ui.html'], Ant [pattern='/swagger-ui.html']]
+2025-06-09T13:20:22.062-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/swagger-ui/**'], Ant [pattern='/swagger-ui/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.062-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/swagger-ui/**'], Ant [pattern='/swagger-ui/**']]
+2025-06-09T13:20:22.063-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/webjars/**'], Ant [pattern='/webjars/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.063-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/webjars/**'], Ant [pattern='/webjars/**']]
+2025-06-09T13:20:22.063-03:00  WARN 9868 --- [libraryapi] [main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Deferred [Mvc [pattern='/actuator/**'], Ant [pattern='/actuator/**']]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2025-06-09T13:20:22.063-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Deferred [Mvc [pattern='/actuator/**'], Ant [pattern='/actuator/**']]
+2025-06-09T13:20:22.122-03:00 DEBUG 9868 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-09T13:20:22.153-03:00 DEBUG 9868 --- [libraryapi] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-06-09T13:20:22.698-03:00 DEBUG 9868 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 1 mappings in 'requestMappingHandlerMapping'
+2025-06-09T13:20:22.700-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/login] in 'viewControllerHandlerMapping'
+2025-06-09T13:20:22.702-03:00 DEBUG 9868 --- [libraryapi] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-06-09T13:20:22.708-03:00 DEBUG 9868 --- [libraryapi] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-06-09T13:20:22.724-03:00  INFO 9868 --- [libraryapi] [main] c.matheusluizago.libraryapi.Application  : Started Application in 6.675 seconds (process running for 7.034)

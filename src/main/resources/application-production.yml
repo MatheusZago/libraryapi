@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: libraryapi-production
+  output:
+    ansi:
+      enabled: ALWAYS
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: false #You can just override what you want to change
