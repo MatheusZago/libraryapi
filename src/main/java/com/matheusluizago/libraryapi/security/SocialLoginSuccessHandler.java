@@ -37,13 +37,13 @@ public class SocialLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         String email = oAuth2User.getAttribute("email"); //getting the email from the Google token
 
-        User user = userService.getByEmail(email);
+        Optional<User> user = userService.getByEmail(email);
 
-        if(user == null){
-            user = registerUserWithGoogle(email);
+        if(user.isEmpty()){
+            user = Optional.of(registerUserWithGoogle(email));
         }
 
-        authentication = new CustomAuthentication(Optional.of(user));
+        authentication = new CustomAuthentication(user);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
