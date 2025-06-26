@@ -42,15 +42,15 @@ CREATE TABLE IF NOT EXISTS clients(
     date_update TIMESTAMP
 );
 
-insert into usuario
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+INSERT INTO users
 (id, login, password, email, roles)
-values
-( uuid_generate_v4(), 'manager', '$2y$12$EpP7BCNYHMEETWx5zedbX.ZHwzlqAHePwyW2zn9HAhlulV4b5Ny9m
-', 'manager@email.com', '{MANAGER}' );
+VALUES
+( uuid_generate_v4(), 'manager', '$2y$12$EpP7BCNYHMEETWx5zedbX.ZHwzlqAHePwyW2zn9HAhlulV4b5Ny9m', 'manager@email.com', '{MANAGER}' );
 
 
-insert into client
+INSERT INTO clients
 (id, client_id, client_secret, redirect_uri, scope)
-values
-( uuid_generate_v4(), 'client-production', '$2y$10$GEKi5M3yVcV14h4I2/bbpu/wWj4UPpI4r/kk04a0pfzrtaavYuUgO
-','http://localhost:8080/authorized' , 'MANAGER');
+VALUES
+( uuid_generate_v4(), 'client-production', '$2y$10$GEKi5M3yVcV14h4I2/bbpu/wWj4UPpI4r/kk04a0pfzrtaavYuUgO','http://localhost:8080/authorized' , 'MANAGER');

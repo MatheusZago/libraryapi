@@ -15,8 +15,7 @@ docker network create [name]
 
 Para criar um container apontando para uma network basta adicionar --network [nome da network] antes da imagem
 Exemplo:
-docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres
-    -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network postgres:16.3
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network postgres:16.3
 
 
 //COMANDOS GERAIS
