@@ -1,0 +1,28 @@
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>app.log</file>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %-40.40logger : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.matheusluizago" level="TRACE" />
+    <logger name="org.springframework.web" level="DEBUG" />
+    <logger name="org.springframework.security" level="TRACE" />
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

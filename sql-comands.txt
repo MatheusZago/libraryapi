@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS books(
 	publish_date DATE NOT NULL,
 	genre VARCHAR(30) NOT NULL,
 	price NUMERIC(18,2),
-	author_id uuid NOT NULL REFERENCES author(id),
+	author_id uuid NOT NULL REFERENCES authors(id),
 	CONSTRAINT chk_genre CHECK (genre IN('FICTION', 'FANTASY', 'MYSTERY', 'ROMANCE', 'BIBLIOGRAPHY', 'SCIENCE')),
     date_register TIMESTAMP,
     date_update TIMESTAMP,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(150) NOT NULL UNIQUE,
     roles VARCHAR[],
     date_register TIMESTAMP,
-    date_update TIMESTAMP,
+    date_update TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS clients(
@@ -37,15 +37,20 @@ CREATE TABLE IF NOT EXISTS clients(
 	client_id VARCHAR(150) NOT NULL,
 	client_secret VARCHAR(400) NOT NULL,
 	redirect_uri VARCHAR(200) NOT NULL,
-	scope VARCHAR(50)
+	scope VARCHAR(50),
 	date_register TIMESTAMP,
-    date_update TIMESTAMP,
+    date_update TIMESTAMP
 );
 
-SELECT b.id, b.title as name_book, a.name as name_author
-from book as b
-join author as a on a.id = b.author_id;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-SELECT b.id as id_book, b.title as title_book, a.name as name_author, a.id as id_author
-from book as b
-join author as a on a.id = b.author_id;
+INSERT INTO users
+(id, login, password, email, roles)
+VALUES
+( uuid_generate_v4(), 'manager', '$2y$12$EpP7BCNYHMEETWx5zedbX.ZHwzlqAHePwyW2zn9HAhlulV4b5Ny9m', 'manager@email.com', '{MANAGER}' );
+
+
+INSERT INTO clients
+(id, client_id, client_secret, redirect_uri, scope)
+VALUES
+( uuid_generate_v4(), 'client-production', '$2y$10$GEKi5M3yVcV14h4I2/bbpu/wWj4UPpI4r/kk04a0pfzrtaavYuUgO','http://localhost:8080/authorized' , 'MANAGER');
